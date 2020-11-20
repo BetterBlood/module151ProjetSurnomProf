@@ -75,6 +75,11 @@ class TeacherController extends Controller {
         return $content;
     }
 
+    /**
+     * permet d'accèder à la page d'ajout de prof
+     *
+     * @return void
+     */
     private function addTeacherAction() {
         include_once("Database.php");
 		$database = new Database();
@@ -86,25 +91,5 @@ class TeacherController extends Controller {
         $content = ob_get_clean();
 
         return $content;
-    }
-
-    /**
-     * Rechercher les données et les passe à la vue (en détail)
-     *
-     * @return string
-     */
-    private function detailFactureAction() {
-
-        $customerRepository = new CustomerRepository();
-        $customer = $customerRepository->findOne($_GET['id']);
-
-        $view = file_get_contents('view/page/customer/detailFacture.php');
-
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
-
     }
 }

@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group col-md-4">
-            <label for="section">State</label>
+            <label for="section">Section</label>
             <select id="section" name="section" class="form-control">
                 <option value="-1" selected>Aucune</option>
                 <?php
