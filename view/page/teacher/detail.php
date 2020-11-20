@@ -2,11 +2,6 @@
 
 	<h2>
 		<?php
-			include_once("../../../Database.php");
-		 	$database = new Database();
-			$teacher = $database->getOneTeacher($_GET["id"]);
-
-			 
 			echo $teacher['teaLastName'] . ' ' . $teacher['teaFirstName'];
 		?>
 	</h2>
@@ -29,7 +24,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<a href="\module151\index.php">Retour à la liste des enseignants</a>
+			<a href="\module151\index.php?controller=teacher&action=list">Retour à la liste des enseignants</a>
 		</div>
 	</div>
 </div>
