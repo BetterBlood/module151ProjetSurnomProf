@@ -16,11 +16,9 @@ if ($debug) {
 }
 date_default_timezone_set('Europe/Zurich'); // pour les dates
 
-// include_once 'controller/Controller.php';
-// include_once 'controller/HomeController.php';
-// include_once 'controller/CustomerController.php';
-// include_once 'controller/FactureController.php';
-// include_once 'controller/RecetteController.php';
+include_once 'controller/Controller.php';
+include_once 'controller/HomeController.php';
+include_once 'controller/TeacherController.php';
 
 
 class MainController {
@@ -52,19 +50,16 @@ class MainController {
 
         switch($page){
             case 'home':
-                //$link = new HomeController();
+                $link = new HomeController();
                 break;
             case 'teacher':
-                //$link = new CustomerController();
+                $link = new TeacherController();
                 break;
             case 'facture':
-                //$link = new FactureController();
-                break;
-            case 'recette':
-                //$link = new RecetteController();
+                $link = new FactureController();
                 break;
             default:
-                //$link = new HomeController();
+                $link = new HomeController();
                 break;
         }
 
@@ -78,13 +73,13 @@ class MainController {
      */
     protected function viewBuild($currentPage) {
 
-        //$content = $currentPage->display();
+        $content = $currentPage->display();
 
         include(dirname(__FILE__) . '/view/head.html');
         include(dirname(__FILE__) . '/view/header.html');
         include(dirname(__FILE__) . '/view/menu.php');
-        //echo $content;
-        include(dirname(__FILE__) . '/view/dynamicContent.php');
+        echo $content;
+        //include(dirname(__FILE__) . '/view/dynamicContent.php');
         include(dirname(__FILE__) . '/view/footer.html');
     }
 }

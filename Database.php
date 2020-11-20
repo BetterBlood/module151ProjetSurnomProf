@@ -9,9 +9,9 @@
  * Description :
  */
 
+ include_once('config.ini.php');
 
  class Database {
-
 
     // Variable de classe
     private $connector;
@@ -20,8 +20,24 @@
      * Fait la connexion à la base de donnée
      */
     public function __construct(){
+        $dbname     = $GLOBALS['MM_CONFIG_DATABASE']['dbname'];
+        $username   = $GLOBALS["MM_CONFIG_DATABASE"]["username"];
+        $pass       = $GLOBALS["MM_CONFIG_DATABASE"]["password"];
+        $host       = $GLOBALS["MM_CONFIG_DATABASE"]["host"];
+        $port       = $GLOBALS["MM_CONFIG_DATABASE"]["port"];
+        $charset    = $GLOBALS["MM_CONFIG_DATABASE"]["charset"];
 
-        $this->connector = new PDO('mysql:host=localhost;dbname=db_nickname_jersteiner;charset=utf8', 'userFilRouge', '.Etml-'); //connection
+        try {
+            $this->connector = new PDO(
+                'mysql:host=' . $host . ";port=" . $port . ";dbname=" . $dbname . 
+                ";charset=" . $charset, $username, $pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+            );
+        }
+        catch(Exception $e) {
+            echo "Connexion DB impossible";
+        }
+
+        //$this->connector = new PDO('mysql:host=localhost;dbname=db_nickname_jersteiner;charset=utf8', 'userFilRouge', '.Etml-'); //connection
     }
 
     /**
@@ -85,40 +101,38 @@
 
         $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
 
-        $this->unsetData($req);
+        $this->unsetData($req); // vide le jeu d'enregistrement
 
         return $teachers;// retour tous les enseignants
     }
 
     /**
-     * TODO: � compl�ter
+     * permet d'obtenir un prof depuis son id
      */
     public function getOneTeacher($id){
-
-        // TODO: r�cup�re la liste des informations pour 1 enseignant
-        // TODO: avoir la requ�te sql pour 1 enseignant (utilisation de l'id)
-        // TODO: appeler la m�thode pour executer la requ�te
-        // TODO: appeler la m�thode pour avoir le r�sultat sous forme de tableau
-        // TODO: retour l'enseignant
 
         $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE idTeacher = ' . $id, null); // appeler la méthode pour executer la requète
 
         $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
 
-        $this->unsetData($req);
+        $this->unsetData($req); // vide le jeu d'enregistrement
 
         return $teachers[0];// retour tous les enseignants
     }
 
     /**
-     * Undocumented function
+     * ajout un prof dans la base de dopnnée
      *
      * @param array() $teacher
      * @return void
      */
     public function insertTeacher($teacher){
 
-        // TODO : remplir
+        $query = 'INSERT INTO t_teacher (teaFirstName,...) VALUES ('. $teacher["firstname"] .', ...'; // TODO : modifier pour fit le array de teacher
+
+        $req = $this->queryPrepareExecute($query, null); // appeler la méthode pour executer la requète
+
+        $this->unsetData($req);
     }
 
     /**
