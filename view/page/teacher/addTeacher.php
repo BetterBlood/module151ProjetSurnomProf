@@ -54,8 +54,14 @@
         </div>
 
         <div class="pull-right">
-            <button type="submit" class="btn btn-primary mb-2">ajouter enseignant</button>
+            <button type="submit" class="btn btn-primary mb-2">Ajouter enseignant</button>
         </div>
+
+        <div class="pull-right" style="margin-right: 15px">
+            <a href="index.php?controller=teacher&action=list" class="btn btn-danger">Annuler</a>
+        </div>
+
+        
 
     </form>
 </div>
