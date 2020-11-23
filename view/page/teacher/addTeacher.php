@@ -10,8 +10,8 @@
             </div>
 
             <div class="form-group col-md-4 mb-3">
-                <label for="surname">Prénom</label>
-                <input type="text" class="form-control" name="surname" id="surname" placeholder="Duding">
+                <label for="firstname">Prénom</label>
+                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Duding">
             </div>
 
             <div class="form-group col-md-4 mb-3">
