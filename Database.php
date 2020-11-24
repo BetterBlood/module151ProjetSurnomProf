@@ -128,7 +128,15 @@
      */
     public function insertTeacher($teacher){
 
-        $query = 'INSERT INTO t_teacher (teaFirstName,...) VALUES ('. $teacher["firstname"] .', ...'; // TODO : modifier pour fit le array de teacher
+        $name = $teacher["name"];
+        $firstname = $teacher["firstname"];
+        $gender = $teacher["gender"];
+        $nickname = $teacher["nickname"];
+        $origineNickname = $teacher["origineNickname"];
+        $section = $teacher["section"];
+
+        $query =    "INSERT INTO t_teacher (teaLastName, teaFirstName, teaGender, teaNickname, teaNicknameOrigin, idSection) 
+                    VALUES ('$name', '$firstname', '$gender', '$nickname', '$origineNickname', '$section')";
 
         $req = $this->queryPrepareExecute($query, null); // appeler la méthode pour executer la requète
 

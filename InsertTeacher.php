@@ -14,13 +14,13 @@
         header('Location: index.php?controller=teacher&action=addTeacher');
     }
 
-    if (array_key_exists("surname", $_POST) && $_POST["surname"] != "" && $_POST["surname"] != " ")
+    if (array_key_exists("firstname", $_POST) && $_POST["firstname"] != "" && $_POST["firstname"] != " ")
     {
-        $teacher["surname"] = $_POST["surname"];
+        $teacher["firstname"] = $_POST["firstname"];
     }
     else
     {
-        $_POST["error"] = "surname";
+        $_POST["error"] = "firstname";
         header('Location: index.php?controller=teacher&action=addTeacher');
     }
 
@@ -73,6 +73,11 @@
         include_once("Database.php");
         $database = new Database();
         $database->insertTeacher($teacher);
+        header('Location: index.php?controller=teacher&action=list');
+    }
+    else
+    {
+        echo $_POST["error"];
     }
     
 
