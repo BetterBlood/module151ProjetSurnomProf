@@ -1,3 +1,13 @@
+<?php
+    $erase = false;
+
+    if (array_key_exists("reload", $_GET) && $_GET["reload"] === "true")
+    {
+        $erase = true;
+        // TODO : ptetre voir s'il faut clear les variables de session de ce form
+    }
+?>
+
 <div class="container">
     <h4>Ajouter un enseignant</h4>
 
@@ -6,7 +16,16 @@
         <div class="form-row">
             <div class="form-group col-md-4 mb-3">
                 <label for="name">Nom</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Laurent">
+                <?php // TODO : faire pareil pour chaque champ
+                    if (array_key_exists("name", $_SESSION) && !$erase)
+                    {
+                        echo '<input type="text" class="form-control" name="name" id="name" placeholder="Laurent" value="' . $_SESSION["name"] . '">';
+                    }
+                    else
+                    {
+                        echo '<input type="text" class="form-control" name="name" id="name" placeholder="Laurent">';
+                    }
+                ?>
             </div>
 
             <div class="form-group col-md-4 mb-3">
@@ -53,12 +72,18 @@
             </select>
         </div>
 
+        
+
         <div class="pull-right">
             <button type="submit" class="btn btn-primary mb-2">Ajouter enseignant</button>
         </div>
 
         <div class="pull-right" style="margin-right: 15px">
-            <a href="index.php?controller=teacher&action=list" class="btn btn-danger">Annuler</a>
+            <a href="index.php?controller=teacher&action=list" class="btn btn-warning">retour</a>
+        </div>
+
+        <div class="pull-right" style="margin-right: 15px">
+            <a href="index.php?controller=teacher&action=addTeacher&reload=true" class="btn btn-danger">Annuler</a>
         </div>
 
         

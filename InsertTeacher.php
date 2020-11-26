@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $teacher = array();
 
     // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
@@ -7,6 +9,7 @@
     if (array_key_exists("name", $_POST) && $_POST["name"] != "" && $_POST["name"] != " ") 
     {
         $teacher["name"] = $_POST["name"];
+        $_SESSION["name"] = $_POST["name"]; // TODO : faire pareil pour chaque champs
     }
     else
     {
