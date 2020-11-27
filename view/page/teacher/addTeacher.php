@@ -4,47 +4,106 @@
     if (array_key_exists("reload", $_GET) && $_GET["reload"] === "true")
     {
         $erase = true;
-        // TODO : ptetre voir s'il faut clear les variables de session de ce form
+
+        if (array_key_exists("name", $_SESSION))
+        {
+            unset($_SESSION["name"]);
+        }
+        if (array_key_exists("firstname", $_SESSION))
+        {
+            unset($_SESSION["firstname"]);
+        }
+        if (array_key_exists("gender", $_SESSION))
+        {
+            unset($_SESSION["gender"]);
+        }
+        if (array_key_exists("nickname", $_SESSION))
+        {
+            unset($_SESSION["nickname"]);
+        }
+        if (array_key_exists("origineNickname", $_SESSION))
+        {
+            unset($_SESSION["origineNickname"]);
+        }
+        if (array_key_exists("section", $_SESSION))
+        {
+            unset($_SESSION["section"]);
+        }
     }
 ?>
 
 <div class="container">
     <h4>Ajouter un enseignant</h4>
 
-    <form action="InsertTeacher.php" method="post">
+    <form action="insertTeacher.php" method="post">
 
         <div class="form-row">
             <div class="form-group col-md-4 mb-3">
                 <label for="name">Nom</label>
-                <?php // TODO : faire pareil pour chaque champ
-                    if (array_key_exists("name", $_SESSION) && !$erase)
-                    {
-                        echo '<input type="text" class="form-control" name="name" id="name" placeholder="Laurent" value="' . $_SESSION["name"] . '">';
+                <?php
+                    echo '<input type="text" class="form-control" name="name" id="name" placeholder="Laurent" ';
+
+                    if (array_key_exists("name", $_SESSION) && !$erase) {
+                        echo 'value="' . $_SESSION["name"] . '"';
                     }
-                    else
-                    {
-                        echo '<input type="text" class="form-control" name="name" id="name" placeholder="Laurent">';
-                    }
+
+                    echo " >";
                 ?>
             </div>
 
             <div class="form-group col-md-4 mb-3">
                 <label for="firstname">Prénom</label>
-                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Duding">
+                <?php
+                    echo '<input type="text" class="form-control" name="firstname" id="firstname" placeholder="Duding" ';
+
+                    if (array_key_exists("firstname", $_SESSION) && !$erase)
+                    {
+                        echo 'value="' . $_SESSION["firstname"] . '"';
+                    }
+
+                    echo '>';
+                ?>
             </div>
 
             <div class="form-group col-md-4 mb-3">
                 <label>Genre</label>
                 <div class="form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="m" value="m">
+                    <?php
+                        echo '<input class="form-check-input" type="radio" name="gender" id="m" value="m" ';
+
+                        if (array_key_exists("gender", $_SESSION) && !$erase && $_SESSION["gender"] == "m")
+                        {
+                            echo 'checked';
+                        }
+
+                        echo '>';
+                    ?>
                     <label class="form-check-label" for="m">Homme</label>
                 </div>
                 <div class="form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="w" value="w">
+                    <?php
+                        echo '<input class="form-check-input" type="radio" name="gender" id="w" value="w" ';
+
+                        if (array_key_exists("gender", $_SESSION) && !$erase && $_SESSION["gender"] == "w")
+                        {
+                            echo 'checked';
+                        }
+
+                        echo '>';
+                    ?>
                     <label class="form-check-label" for="w">Femme</label>
                 </div>
                 <div class="form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="o" value="o">
+                    <?php
+                        echo '<input class="form-check-input" type="radio" name="gender" id="o" value="o" ';
+
+                        if (array_key_exists("gender", $_SESSION) && !$erase && $_SESSION["gender"] == "o")
+                        {
+                            echo 'checked';
+                        }
+
+                        echo '>';
+                    ?>
                     <label class="form-check-label" for="o">Autre</label>
                 </div>
             </div>
@@ -52,27 +111,61 @@
 
         <div class="form-group">
             <label for="nickname">Surnom</label>
-            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Ding Dgin Ding">
+            <?php
+                echo '<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Ding Dgin Ding" ';
+
+                if (array_key_exists("nickname", $_SESSION) && !$erase)
+                {
+                    echo 'value="' . $_SESSION["nickname"] . '" ';
+                }
+
+                echo 'aria-describedby="nicknameHelpLine">';
+            ?>
+            <small id="nicknameHelpLine" class="text-muted">
+                Some funny one
+            </small>
         </div>
 
         <div class="form-group">
             <label for="origineNickname">Origine du surnom</label>
-            <textarea class="form-control" id="origineNickname" name="origineNickname" rows="3"></textarea>
+            <?php
+                echo '<textarea class="form-control" name="origineNickname" id="origineNickname" placeholder="il a sonné l\'heure" rows="3">';
+                
+                if (array_key_exists("origineNickname", $_SESSION) && !$erase)
+                {
+                    echo $_SESSION["origineNickname"];
+                }
+
+                echo '</textarea>';
+            ?>
         </div>
 
         <div class="form-group col-md-4">
             <label for="section">Section</label>
             <select id="section" name="section" class="form-control">
-                <option value="-1" selected>Aucune</option>
                 <?php
+                    echo '<option value="-1" ';
+
+                    if (array_key_exists("section", $_SESSION) && $_SESSION["section"] == "-1")
+                    {
+                        echo 'selected';
+                    }
+                    
+                    echo '</option>';
+
                     foreach ($sections as $section) {
-                        echo '<option value="' . $section["idSection"] . '">' . $section["secName"] . '</option>';
+                        echo '<option value="' . $section["idSection"] . '"';
+
+                        if (array_key_exists("section", $_SESSION) && !$erase && $_SESSION["section"] == $section["idSection"])
+                        {
+                            echo 'selected';
+                        }
+                        
+                        echo '>' . $section["secName"] . '</option>';
                     }
                 ?>
             </select>
         </div>
-
-        
 
         <div class="pull-right">
             <button type="submit" class="btn btn-primary mb-2">Ajouter enseignant</button>

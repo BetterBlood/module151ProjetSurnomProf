@@ -62,8 +62,16 @@
      */
     private function queryPrepareExecute($query, $binds){
         
-        // TODO: permet de pr�parer, de binder et d�ex�cuter une requ�te (select avec where ou insert, update et delete)
         $req = $this->connector->prepare($query); // requette
+
+        if ($binds != null)
+        {
+            foreach($binds as $bind)
+            {
+                $req->bindValue($bind['marker'], $bind['var'], $bind['type']);
+            }
+        }
+        
         $req->execute();
 
         return $req;
@@ -111,7 +119,15 @@
      */
     public function getOneTeacher($id){
 
-        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE idTeacher = ' . $id, null); // appeler la méthode pour executer la requète
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE idTeacher = :id', $values); // appeler la méthode pour executer la requète
 
         $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
 
@@ -128,17 +144,66 @@
      */
     public function insertTeacher($teacher){
 
-        $name = $teacher["name"];
-        $firstname = $teacher["firstname"];
-        $gender = $teacher["gender"];
-        $nickname = $teacher["nickname"];
-        $origineNickname = $teacher["origineNickname"];
-        $section = $teacher["section"];
+        $values = array(
+            1 => array(
+                'marker' => ':surname',
+                'var' => $teacher["name"],
+                'type' => PDO::PARAM_STR
+            ),
+            2 => array(
+                'marker' => ':firstname',
+                'var' => $teacher["firstname"],
+                'type' => PDO::PARAM_STR
+            ),
+            3 => array(
+                'marker' => ':gender',
+                'var' => $teacher["gender"],
+                'type' => PDO::PARAM_STR
+            ),
+            4 => array(
+                'marker' => ':nickname',
+                'var' => $teacher["nickname"],
+                'type' => PDO::PARAM_STR
+            ),
+            5 => array(
+                'marker' => ':origineNickname',
+                'var' => $teacher["origineNickname"],
+                'type' => PDO::PARAM_STR
+            ),
+            6 => array(
+                'marker' => ':section',
+                'var' => $teacher["section"],
+                'type' => PDO::PARAM_INT
+            )
+        );
 
         $query =    "INSERT INTO t_teacher (teaLastName, teaFirstName, teaGender, teaNickname, teaNicknameOrigin, idSection) 
-                    VALUES ('$name', '$firstname', '$gender', '$nickname', '$origineNickname', '$section')";
+                    VALUES (:surname, :firstname, :gender, :nickname, :origineNickname, :section)";
 
-        $req = $this->queryPrepareExecute($query, null); // appeler la méthode pour executer la requète
+        $req = $this->queryPrepareExecute($query, $values); // appeler la méthode pour executer la requète
+        
+        $this->unsetData($req);
+    }
+
+    /**
+     * permet de retirer un prof de la base de donnée
+     *
+     * @param int $id
+     * @return void
+     */
+    public function deleteTeacher($id)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $query = "DELETE FROM t_teacher WHERE t_teacher.idTeacher = " . $id;
+
+        $req = $this->queryPrepareExecute($query, $values);
 
         $this->unsetData($req);
     }
