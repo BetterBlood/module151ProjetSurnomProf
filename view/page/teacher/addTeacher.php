@@ -35,7 +35,7 @@
 <div class="container">
     <h4>Ajouter un enseignant</h4>
 
-    <form action="InsertTeacher.php" method="post">
+    <form action="insertTeacher.php" method="post">
 
         <div class="form-row">
             <div class="form-group col-md-4 mb-3">
