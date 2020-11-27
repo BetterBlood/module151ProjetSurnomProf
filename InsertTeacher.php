@@ -74,7 +74,7 @@
 
     if (array_key_exists("section", $_POST) && $_POST["section"] != "-1" && $_POST["section"] != "0")
     {
-        $teacher["section"] = $_POST["section"];
+        $teacher["section"] = (int)$_POST["section"];
         $_SESSION["section"] = $_POST["section"];
     }
     else

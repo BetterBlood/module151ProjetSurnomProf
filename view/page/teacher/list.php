@@ -13,18 +13,15 @@
 			<th>Option</th>
 		</tr>
 		<?php
-
-			include_once("Database.php");
-			$database = new Database();
-			$teachers = $database->getAllTeachers();
-
 			// Affichage de chaque enseignant
-			foreach ($teachers as $teacher) {
+			foreach ($teachers as $teacher) 
+			{
 				echo '<tr>';
 				echo '<td>' . htmlspecialchars($teacher['teaLastName']) . " " .  htmlspecialchars($teacher['teaFirstName']) . '</td>';
 				echo '<td>' . htmlspecialchars($teacher['teaNickname']) . '</td>';
-				echo '<td>' . '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconLoupe.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignat"></a></td>';
-				echo '</tr>';
+				echo '<td>' . '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconLoupe.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignat"></a>';
+				echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="deleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconLoupe.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignat"></a>';
+				echo '</td></tr>';
 			}
 		?>
 

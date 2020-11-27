@@ -61,8 +61,11 @@ class TeacherController extends Controller {
     private function detailAction() {
 
         include_once("Database.php");
-		$database = new Database();
-		$teacher = $database->getOneTeacher($_GET['id']);
+        $database = new Database();
+        if (array_key_exists("id", $_GET))
+        {
+            $teacher = $database->getOneTeacher($_GET['id']);
+        }
         //$customerRepository = new CustomerRepository();
         //$customer = $customerRepository->findOne($_GET['id']);
 
