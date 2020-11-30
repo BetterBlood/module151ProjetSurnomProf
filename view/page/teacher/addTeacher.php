@@ -95,7 +95,7 @@
                 <label>Genre</label>
                 <?php
 
-                echo '<div class="form-check-inline"';
+                echo '<div class="form-check-inline" ';
                 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "gender") !== false)
                     {
