@@ -5,20 +5,20 @@
     $error = false;
 
     // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
-    $_POST["error"] = "";
+    $_SESSION["error"] = "";
 
     if (array_key_exists("name", $_POST) && $_POST["name"] != "" && $_POST["name"] != " ") 
     {
         $teacher["name"] = $_POST["name"];
-        $_SESSION["name"] = $_POST["name"];
+        $_SESSION["surname"] = $_POST["name"];
     }
     else
     {
-        $_POST["error"] = "name";
+        $_SESSION["error"] .= "surname";
         $error = true;
     }
 
-    $_POST["error"] += ",";
+    $_SESSION["error"] .= ",";
 
     if (array_key_exists("firstname", $_POST) && $_POST["firstname"] != "" && $_POST["firstname"] != " ")
     {
@@ -27,11 +27,11 @@
     }
     else
     {
-        $_POST["error"] = "firstname";
+        $_SESSION["error"] .= "firstname";
         $error = true;
     }
 
-    $_POST["error"] += ",";
+    $_SESSION["error"] .= ",";
 
     if (array_key_exists("gender", $_POST) && ($_POST["gender"] == 'm' || $_POST["gender"] == 'w' || $_POST["gender"] == 'o'))
     {
@@ -40,11 +40,11 @@
     }
     else
     {
-        $_POST["error"] = "gender";
+        $_SESSION["error"] .= "gender";
         $error = true;
     }
 
-    $_POST["error"] += ",";
+    $_SESSION["error"] .= ",";
 
     if (array_key_exists("nickname", $_POST) && $_POST["nickname"] != "" && $_POST["nickname"] != " ")
     {
@@ -53,11 +53,11 @@
     }
     else
     {
-        $_POST["error"] = "nickname";
+        $_SESSION["error"] .= "nickname";
         $error = true;
     }
 
-    $_POST["error"] += ",";
+    $_SESSION["error"] .= ",";
 
     if (array_key_exists("origineNickname", $_POST) && $_POST["origineNickname"] != "" && $_POST["origineNickname"] != " ")
     {
@@ -66,11 +66,11 @@
     }
     else
     {
-        $_POST["error"] = "origineNickname";
+        $_SESSION["error"] .= "origineNickname";
         $error = true;
     }
 
-    $_POST["error"] += ",";
+    $_SESSION["error"] .= ",";
 
     if (array_key_exists("section", $_POST) && $_POST["section"] != "-1" && $_POST["section"] != "0")
     {
@@ -79,11 +79,11 @@
     }
     else
     {
-        $_POST["error"] += "section";
+        $_SESSION["error"] .= "section";
         $error = true;
     }
 
-    //var_dump($_POST);
+    //var_dump($_SESSION);
 
     //var_dump($teacher);
 
@@ -91,7 +91,37 @@
     {
         include_once("Database.php");
         $database = new Database();
-        $database->insertTeacher($teacher);
+        $database->insertTeacher($teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
+
+        if (array_key_exists("surname", $_SESSION))
+        {
+            unset($_SESSION["surname"]);
+        }
+        if (array_key_exists("firstname", $_SESSION))
+        {
+            unset($_SESSION["firstname"]);
+        }
+        if (array_key_exists("gender", $_SESSION))
+        {
+            unset($_SESSION["gender"]);
+        }
+        if (array_key_exists("nickname", $_SESSION))
+        {
+            unset($_SESSION["nickname"]);
+        }
+        if (array_key_exists("origineNickname", $_SESSION))
+        {
+            unset($_SESSION["origineNickname"]);
+        }
+        if (array_key_exists("section", $_SESSION))
+        {
+            unset($_SESSION["section"]);
+        }
+        if (array_key_exists("error", $_SESSION))
+        {
+            unset($_SESSION["error"]);
+        }
+        
         header('Location: index.php?controller=teacher&action=list');
     }
     else
