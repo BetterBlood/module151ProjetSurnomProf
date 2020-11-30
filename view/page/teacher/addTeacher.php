@@ -51,7 +51,7 @@
 
     <form action="insertTeacher.php" method="post">
 
-        <div class="form-row">
+        <div class="form-row" style="height: fit-content">
             <div class="form-group col-md-4 mb-3">
                 <label for="name">Nom</label>
                 <?php
@@ -90,9 +90,9 @@
             </div>
 
             
-               <div class="form-group col-md-4 mb-3" >
+            <div class="form-group col-md-4 mb-3" >
                 
-                <label>Genre</label>
+                <label style="height: 30px">Genre</label>
                 <?php
 
                 echo '<div class="form-check-inline" ';
@@ -141,46 +141,48 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="nickname">Surnom</label>
-            <?php
-                echo '<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Ding Dgin Ding" ';
+        <div class="form-row" style="height:fit-content">
+            <div class="form-group">
+                <label for="nickname">Surnom</label>
+                <?php
+                    echo '<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Ding Dgin Ding" ';
 
-                if (array_key_exists("nickname", $_SESSION) && !$erase)
-                {
-                    echo 'value="' . $_SESSION["nickname"] . '" ';
-                }
+                    if (array_key_exists("nickname", $_SESSION) && !$erase)
+                    {
+                        echo 'value="' . $_SESSION["nickname"] . '" ';
+                    }
 
-                if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "nickname") !== false)
-                {
-                    echo 'style="box-shadow: 0 0 1em red" ';
-                }
+                    if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "nickname") !== false)
+                    {
+                        echo 'style="box-shadow: 0 0 1em red" ';
+                    }
 
-                echo 'aria-describedby="nicknameHelpLine">';
-            ?>
-            <small id="nicknameHelpLine" class="text-muted">
-                Some funny one
-            </small>
-        </div>
+                    echo 'aria-describedby="nicknameHelpLine">';
+                ?>
+                <small id="nicknameHelpLine" class="text-muted">
+                    Some funny one
+                </small>
+            </div>
 
-        <div class="form-group">
-            <label for="origineNickname">Origine du surnom</label>
-            <?php
-                echo '<textarea class="form-control" name="origineNickname" id="origineNickname" placeholder="il a sonné l\'heure" rows="3" ';
+            <div class="form-group">
+                <label for="origineNickname">Origine du surnom</label>
+                <?php
+                    echo '<textarea class="form-control" name="origineNickname" id="origineNickname" placeholder="il a sonné l\'heure" rows="3" ';
 
-                if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "origineNickname") !== false)
-                {
-                    echo 'style="box-shadow: 0 0 1em red" ';
-                }
-                echo '>';
-                
-                if (array_key_exists("origineNickname", $_SESSION) && !$erase)
-                {
-                    echo $_SESSION["origineNickname"];
-                }
+                    if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "origineNickname") !== false)
+                    {
+                        echo 'style="box-shadow: 0 0 1em red" ';
+                    }
+                    echo '>';
+                    
+                    if (array_key_exists("origineNickname", $_SESSION) && !$erase)
+                    {
+                        echo $_SESSION["origineNickname"];
+                    }
 
-                echo '</textarea>';
-            ?>
+                    echo '</textarea>';
+                ?>
+            </div>
         </div>
 
         <div class="form-group col-md-4">

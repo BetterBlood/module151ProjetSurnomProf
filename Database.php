@@ -238,7 +238,75 @@
         return $sections[0];// section désiré
     }
 
-    // + tous les autres m�thodes dont vous aurez besoin pour la suite (insertTeacher ... etc)
+    public function getAllSectionsAndThisTeacher($id, &$teacher)
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_section', null);// appeler la méthode pour executer la requète
+
+        $sections = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE idTeacher = :id', $values); // appeler la méthode pour executer la requète
+
+        $teacher = $this->formatData($req)[0];// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        $this->unsetData($req); // vide le jeu d'enregistrement
+
+        return $sections;
+    }
+
+    public function editTeacher($idTeacher,  $teacher)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':surname',
+                'var' => $_POST["name"],
+                'type' => PDO::PARAM_STR
+            ),
+            2 => array(
+                'marker' => ':firstname',
+                'var' => $_POST["firstname"],
+                'type' => PDO::PARAM_STR
+            ),
+            3 => array(
+                'marker' => ':gender',
+                'var' => $_POST["gender"],
+                'type' => PDO::PARAM_STR
+            ),
+            4 => array(
+                'marker' => ':nickname',
+                'var' => $_POST["nickname"],
+                'type' => PDO::PARAM_STR
+            ),
+            5 => array(
+                'marker' => ':origineNickname',
+                'var' => $_POST["origineNickname"],
+                'type' => PDO::PARAM_STR
+            ),
+            6 => array(
+                'marker' => ':section',
+                'var' => $_POST["section"],
+                'type' => PDO::PARAM_INT
+            )
+        );
+
+        $query =   'UPDATE t_teacher SET 
+                    teaLastName = :surname, teaFirstName = :firstname, teaGender = :gender,
+                    teaNickname = :nickname, teaNicknameOrigin = :origineNickname, idSection = :section
+                    WHERE idTeacher = ' . $idTeacher;
+
+        $req = $this->queryPrepareExecute($query, $values);
+
+        $this->unsetData($req);
+    }
+
+    // + tous les autres méthodes dont vous aurez besoin pour la suite (insertTeacher ... etc)
  }
 
 

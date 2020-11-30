@@ -21,7 +21,7 @@
 				echo '<td>' . htmlspecialchars($teacher['teaNickname']) . '</td>';
 				echo '<td>' . '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconLoupe.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignant"></a>';
 				echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="deleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconTrash.png" alt="image de poubelle pour supprimer l\'enseignant de la base de donnée"></a>';
-				echo '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconPencil.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignant"></a>';
+				echo '<a href="index.php?controller=teacher&action=editTeacher&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconPencil.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignant"></a>';
 				echo '</td></tr>';
 			}
 		?>
