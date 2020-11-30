@@ -200,7 +200,7 @@
                         echo 'selected';
                     }
                     
-                    echo '</option>';
+                    echo '>aucune</option>';
 
                     foreach ($sections as $section) {
                         echo '<option value="' . $section["idSection"] . '"';
