@@ -95,4 +95,24 @@ class TeacherController extends Controller {
 
         return $content;
     }
+
+    private function editTeacherAction()
+    {
+        include_once("Database.php");
+        $database = new Database();
+        $teacher = array();
+
+        if (array_key_exists("id", $_GET))
+        {
+            $sections = $database->getAllSectionsAndThisTeacher($_GET['id'], $teacher);
+        }
+
+        $view = file_get_contents('view/page/teacher/updateTeacher.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
 }
