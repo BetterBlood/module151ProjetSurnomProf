@@ -2,7 +2,16 @@
 
 	<h2>Liste des enseignants</h2>
 	<div>
-		<a href="index.php?controller=teacher&action=addTeacher"><button class=pull-right>ajouter un professeur</button></a>
+		<?php
+			if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"])
+			{
+				echo '<a href="index.php?controller=teacher&action=addTeacher"><button class="pull-right">ajouter un professeur</button></a>';
+			}
+			else
+			{
+				echo '<a onclick="confirm(\'Vous devez vous connecter pour pouvoir ajouter un prof\')" href="#"><button class="pull-right">ajouter un professeur</button></a>';
+			}
+		?>
 	</div>
 	
 	<div class="row">
