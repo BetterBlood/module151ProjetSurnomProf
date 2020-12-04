@@ -18,7 +18,7 @@ class TeacherController extends Controller {
     public function display() {
 
         $action = "listAction";
-        
+
         if (array_key_exists("userPermissionsNumber", $_SESSION))
         {
             $userLVL = $_SESSION["userPermissionsNumber"];
@@ -30,7 +30,7 @@ class TeacherController extends Controller {
                     break;
 
                 case "detail":
-                    if ($userLVL >= 50)
+                    if ($userLVL > 0)
                     {
                         $action = "detailAction";
                     }

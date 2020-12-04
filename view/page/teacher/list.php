@@ -5,7 +5,7 @@
 		<?php
 			//var_dump($_SESSION);
 
-			if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"]) // TODO : à vérifier s'il y a besoin de droit pour ajouter un prof
+			if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"] && array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 50) // TODO : à vérifier s'il y a besoin de droit pour ajouter un prof
 			{
 				echo '<a href="index.php?controller=teacher&action=addTeacher"><button class="pull-right">ajouter un professeur</button></a>';
 
@@ -16,7 +16,7 @@
 			}
 			else
 			{
-				echo '<a onclick="confirm(\'Vous devez vous connecter pour pouvoir ajouter un prof\')" href="#"><button class="pull-right">ajouter un professeur</button></a>';
+				echo '<a onclick="confirm(\'Une élévation est nécessaire\')" href="#"><button class="pull-right">ajouter un professeur</button></a>';
 			}
 		?>
 	</div>
