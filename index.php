@@ -3,7 +3,7 @@ session_start();
 
 if (!array_key_exists("loged_in", $_SESSION))
 {
-    $_SESSION["log-in"] = false;
+    $_SESSION["loged_in"] = false;
     $_SESSION["userName"] = "";
     $_SESSION["userPassword"] = "";
 }
@@ -27,6 +27,7 @@ date_default_timezone_set('Europe/Zurich'); // pour les dates
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
 include_once 'controller/TeacherController.php';
+include_once 'controller/userController.php';
 
 
 class MainController {
@@ -60,12 +61,27 @@ class MainController {
             case 'home':
                 $link = new HomeController();
                 break;
+
             case 'teacher':
                 $link = new TeacherController();
                 break;
+
             case 'facture':
                 $link = new FactureController();
                 break;
+
+            case 'user':
+                if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 100)
+                {
+                    $link = new UserController();
+                }
+                else
+                {
+                    $_GET["action"] = "index";
+                    $link = new HomeController();
+                }
+                break; 
+
             default:
                 $link = new HomeController();
                 break;

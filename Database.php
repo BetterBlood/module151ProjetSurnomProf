@@ -188,6 +188,34 @@
         $this->unsetData($req);
     }
 
+    public function insertUser($user){
+
+        $values = array(
+            1 => array(
+                'marker' => ':useUsername',
+                'var' => $user["useUsername"],
+                'type' => PDO::PARAM_STR
+            ),
+            2 => array(
+                'marker' => ':usePassword',
+                'var' => password_hash($user["usePassword"], PASSWORD_BCRYPT),
+                'type' => PDO::PARAM_STR
+            ),
+            3 => array(
+                'marker' => ':useAdminRight',
+                'var' => $user["useAdminRight"],
+                'type' => PDO::PARAM_INT
+            )
+        );
+
+        $query =    "INSERT INTO t_user (useUsername, usePassword, useAdminRight) 
+                    VALUES (:useUsername, :usePassword, :useAdminRight)";
+
+        $req = $this->queryPrepareExecute($query, $values); // appeler la méthode pour executer la requète
+        
+        $this->unsetData($req);
+    }
+
     /**
      * permet de retirer un prof de la base de donnée
      *
@@ -204,7 +232,24 @@
             ),
         );
 
-        $query = "DELETE FROM t_teacher WHERE t_teacher.idTeacher = " . $id;
+        $query = "DELETE FROM t_teacher WHERE t_teacher.idTeacher = :id";
+
+        $req = $this->queryPrepareExecute($query, $values);
+
+        $this->unsetData($req);
+    }
+
+    public function deleteUser($id)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $query = "DELETE FROM t_user WHERE t_user.idUser = :id";
 
         $req = $this->queryPrepareExecute($query, $values);
 

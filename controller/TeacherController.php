@@ -17,10 +17,11 @@ class TeacherController extends Controller {
      */
     public function display() {
 
+        $action = "listAction";
+        
         if (array_key_exists("userPermissionsNumber", $_SESSION))
         {
             $userLVL = $_SESSION["userPermissionsNumber"];
-            $action = "";
             
             switch($_GET["action"]) // TODO : modifier pour vérifier les droit selon l'action et le level de droit
             {
@@ -40,7 +41,7 @@ class TeacherController extends Controller {
                     break;
 
                 case "addTeacher":
-                    if ($userLVL >= 50)
+                    if ($userLVL >= 50) // TODO : vérifier quel droit s'applique ici et à la page list (le bouton pour ajouter)
                     {
                         $action = "addTeacherAction";
                     }
@@ -51,7 +52,7 @@ class TeacherController extends Controller {
                     break;
 
                 case "editTeacher":
-                    if ($userLVL >= 100)
+                    if ($userLVL >= 75)
                     {
                         $action = "editTeacherAction";
                     }
