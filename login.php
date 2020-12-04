@@ -3,12 +3,11 @@
     //var_dump($_POST);
     $_SESSION["loginError"] = false;
 
+    //var_dump($_SESSION);
+
     if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"])
     {
-        $_SESSION["loged_in"] = false;
-        $_SESSION["userName"] = "";
-        $_SESSION["userPermissionsNumber"] = 0;
-        $_SESSION["userPermissions"] = "not set";
+        session_destroy(); // déconnection
     }
     else
     {
@@ -21,18 +20,28 @@
             {
                 $_SESSION["loged_in"] = true;
                 $_SESSION["userName"] = $_POST["userName"];
-                $_SESSION["userPermissionsNumber"] = $database->getUserRight($_POST["userName"]);
+                $userLVL = (int) $database->getUserRight($_POST["userName"]);
+                $_SESSION["userPermissionsNumber"] = $userLVL;
 
-                switch ($_SESSION["userPermissionsNumber"]) { // on set les permissions
-                    case 100:
+                switch ($userLVL) { // on set les permissions
+                    case ($userLVL >= 100):
+                        //var_dump($userLVL);
+                        $_SESSION["userPermissions"] = "superAdmin";
+                        //var_dump($_SESSION["userPermissions"]);
+                        break;
+                        
+                    case ($userLVL >= 75):
                         $_SESSION["userPermissions"] = "admin";
                         break;
-                    case 50:
+
+                    case ($userLVL >= 50):
                         $_SESSION["userPermissions"] = "user";
                         break;
-                    case 0:
+
+                    case ($userLVL > 0):
                         $_SESSION["userPermissions"] = "noRight";
                         break;
+
                     default:
                         $_SESSION["userPermissions"] = "not set";
                         break;
@@ -54,4 +63,4 @@
     header('Location: index.php?controller=teacher&action=list');
 ?>
 
-<!--<a href="index.php?controller=teacher&action=list">retour</a>-->
+<a href="index.php?controller=teacher&action=list">retour</a>

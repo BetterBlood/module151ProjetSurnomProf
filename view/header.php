@@ -2,14 +2,14 @@
 <div class="container">
     <nav class="pull-right">
         <form action="login.php" method="post">
-            <div class="form-row form-inline" style="height: fit-content">
+            <div class="form-row form-inline" style="height:fit-content">
                 <?php 
                     if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"]) // array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"]
                     {
                         ?>
-                        <div class="form-group col-md-4 mb-3">
+                        <div class="form-group col-md-4 mb-3" style="width:fit-content">
                             <?php
-                                echo $_SESSION["userName"] . '(' . $_SESSION["userPermissions"] . ')';
+                                echo $_SESSION["userName"] . ' (' . $_SESSION["userPermissions"] . ')';
                             ?>
                         </div>
 
