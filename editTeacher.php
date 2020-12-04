@@ -2,7 +2,6 @@
     session_start();
 
     $teacher = array();
-    $teacher["idTeacher"] = 
     $error = false;
 
     // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
@@ -133,7 +132,8 @@
     }
     else
     {
-        header('Location: index.php?controller=teacher&action=editTeacher');
+        unset($_SESSION["teacherInModification"]);
+        header('Location: index.php?controller=teacher&action=editTeacher&id=' . $_SESSION["idTecherInModification"]);
     }
     
 

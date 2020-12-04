@@ -17,6 +17,27 @@ class TeacherController extends Controller {
      */
     public function display() {
 
+        if (array_key_exists("userPermissionsNumber", $_SESSION))
+        {
+            $userLVL = $_SESSION["userPermissionsNumber"];
+            
+            // switch($_GET["action"]) // TODO : modifier pour vérifier les droit selon l'action et le level de droit
+            // {
+            //     case "list":
+            //             $_SESSION["userPermissions"] = "admin";
+            //             break;
+            //         case 50:
+            //             $_SESSION["userPermissions"] = "user";
+            //             break;
+            //         case 0:
+            //             $_SESSION["userPermissions"] = "noRight";
+            //             break;
+            //         default:
+            //             $_SESSION["userPermissions"] = "not set";
+            //             break;
+            // }
+        }
+
         $action = $_GET['action'] . "Action";
 
         // Appelle une méthode dans cette classe (ici, ce sera le nom + action (ex: listAction, detailAction, ...))
