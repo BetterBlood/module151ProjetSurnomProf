@@ -52,4 +52,24 @@ class HomeController extends Controller {
 
         return $content;
     }
+
+        /**
+     * Check Form action
+     *
+     * @return string
+     */
+    private function checkAction() {
+
+        $lastName = htmlspecialchars($_POST['lastName']);
+        $firstName = htmlspecialchars($_POST['firstName']);
+        $answer = htmlspecialchars($_POST['answer']);
+
+        $view = file_get_contents('view/page/home/resume.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
 }
