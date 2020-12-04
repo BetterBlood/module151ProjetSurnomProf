@@ -21,19 +21,38 @@
                     }
                     else 
                     {
-                        ?>
+                        if (array_key_exists("loginError", $_SESSION) && $_SESSION["loginError"])
+                        {
+                            ?>
 
-                        <div class="form-group col-md-4 mb-3">
-                            <input type="text" class="form-control" name="userName" id="userName" placeholder="Login">
-                        </div>
-                        <div class="form-group col-md-4 mb-3">
-                            <input type="password" class="form-control" name="userPassword" id="userPassword" placeholder="Mot de Passe">
-                        </div>
-                        <div class="form-group col-md-4 mb-3">
-                            <button type="submit" class="btn btn-info mb-2">Se connecter</button>
-                        </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <input type="text" class="form-control" name="userName" id="userName" placeholder="Login" style="box-shadow:0 0 1em red">
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <input type="password" class="form-control" name="userPassword" id="userPassword" placeholder="Mot de Passe" style="box-shadow:0 0 1em red">
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <button type="submit" class="btn btn-info mb-2">Se connecter</button>
+                            </div>
 
-                        <?php
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+
+                            <div class="form-group col-md-4 mb-3">
+                                <input type="text" class="form-control" name="userName" id="userName" placeholder="Login">
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <input type="password" class="form-control" name="userPassword" id="userPassword" placeholder="Mot de Passe">
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <button type="submit" class="btn btn-info mb-2">Se connecter</button>
+                            </div>
+
+                            <?php
+                        }
                     }
                 ?>
             </div>

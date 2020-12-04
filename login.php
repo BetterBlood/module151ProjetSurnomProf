@@ -1,31 +1,29 @@
 <?php
     session_start();
-    var_dump($_POST);
+    //var_dump($_POST);
+    $_SESSION["loginError"] = false;
 
     if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"])
     {
         $_SESSION["loged_in"] = false;
+        $_SESSION["userName"] = "";
+        $_SESSION["userPermissionsNumber"] = 0;
+        $_SESSION["userPermissions"] = "not set";
     }
     else
     {
-        // vérifier que l'user exist :
-            //parcourir les users et voir si correspondance 
-            // si correspond vérifier password
-                // si correspond >> login !!! 
-                //erreur de login !!
-            //erreur de login !!
         include_once("Database.php");
         $database = new Database();
 
-        if ($database->userExist($_POST["userName"]))
+        if (array_key_exists("userName", $_POST) && $database->userExist($_POST["userName"])) // on vérifie si l'utilisateur existe // sinon on empeche la connection
         {
-            if ($database->verifyPassword($_POST["userName"], $_POST["userPassword"]))
+            if (array_key_exists("userPassword", $_POST) && $database->verifyPassword($_POST["userName"], $_POST["userPassword"])) // on verrifie le mot de pass
             {
                 $_SESSION["loged_in"] = true;
                 $_SESSION["userName"] = $_POST["userName"];
                 $_SESSION["userPermissionsNumber"] = $database->getUserRight($_POST["userName"]);
 
-                switch ($_SESSION["userPermissionsNumber"]) {
+                switch ($_SESSION["userPermissionsNumber"]) { // on set les permissions
                     case 100:
                         $_SESSION["userPermissions"] = "admin";
                         break;
@@ -42,16 +40,18 @@
             }
             else 
             {
-                echo 'erreur de login !';
+                $_SESSION["loginError"] = true;
             }
         }
         else
         {
-            echo 'erreur de login !';
+            $_SESSION["loginError"] = true;
         }
-
-        var_dump($_SESSION);
     }
+
+    //var_dump($_SESSION);
+
+    header('Location: index.php?controller=teacher&action=list');
 ?>
 
-<a href="index.php?controller=teacher&action=list">retour</a>
+<!--<a href="index.php?controller=teacher&action=list">retour</a>-->
