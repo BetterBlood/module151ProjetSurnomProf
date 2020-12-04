@@ -92,9 +92,12 @@
      * détrui le connector
      */
     private function unsetData($req){
-
-        $this->connector = null;
         $req->closeCursor();
+        $this->destroyConnector();
+    }
+
+    private function destroyConnector(){
+        $this->connector = null;
         unset($this->connector);
     }
 
@@ -252,11 +255,11 @@
             ),
         );
 
-        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE idTeacher = :id', $values); // appeler la méthode pour executer la requète
+        //$this->unsetData($req); // vide le jeu d'enregistrement
 
-        $teacher = $this->formatData($req)[0];// appeler la méthode pour avoir le résultat sous forme de tableau
+        $teacher = $this->getOneTeacher($id);// appeler la méthode pour avoir le résultat sous forme de tableau
 
-        $this->unsetData($req); // vide le jeu d'enregistrement
+        //$this->unsetData($req); // vide le jeu d'enregistrement
 
         return $sections;
     }
@@ -304,6 +307,69 @@
         $req = $this->queryPrepareExecute($query, $values);
 
         $this->unsetData($req);
+    }
+
+    public function getAllUsers()
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_user', null);// appeler la méthode pour executer la requète
+
+        $users = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        $this->unsetData($req);
+
+        return $users;// retour tous les users
+    }
+
+    public function userExist($username)
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_user', null);// appeler la méthode pour executer la requète
+
+        $users = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        foreach($users as $user)
+        {
+            if ($user["useUsername"] == $username)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function verifyPassword($username, $password)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':username',
+                'var' => $username,
+                'type' => PDO::PARAM_STR
+            ),
+        );
+
+        $req = $this->queryPrepareExecute('SELECT usePassword FROM t_user WHERE useUsername = :username', $values);
+
+        $hashedPassword = $this->formatData($req)[0]["usePassword"];
+        //var_dump($hashedPassword);
+
+        return password_verify($password, $hashedPassword); 
+    }
+
+    public function getUserRight($username)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':username',
+                'var' => $username,
+                'type' => PDO::PARAM_STR
+            ),
+        );
+
+        $req = $this->queryPrepareExecute('SELECT useAdminRight FROM t_user WHERE useUsername = :username', $values);
+
+        $right = $this->formatData($req)[0]["useAdminRight"];
+
+        return $right; 
     }
 
     // + tous les autres méthodes dont vous aurez besoin pour la suite (insertTeacher ... etc)

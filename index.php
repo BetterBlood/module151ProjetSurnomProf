@@ -1,6 +1,13 @@
 <?php
 session_start();
 
+if (!array_key_exists("loged_in", $_SESSION))
+{
+    $_SESSION["log-in"] = false;
+    $_SESSION["userName"] = "";
+    $_SESSION["userPassword"] = "";
+}
+
 /**
  * ETML
  * Auteur :  Cindy Hardegger
@@ -77,7 +84,7 @@ class MainController {
         $content = $currentPage->display();
 
         include(dirname(__FILE__) . '/view/head.html');
-        include(dirname(__FILE__) . '/view/header.html');
+        include(dirname(__FILE__) . '/view/header.php');
         include(dirname(__FILE__) . '/view/menu.php');
         echo $content;
         //include(dirname(__FILE__) . '/view/dynamicContent.php');

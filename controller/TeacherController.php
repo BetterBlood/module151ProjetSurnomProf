@@ -17,7 +17,57 @@ class TeacherController extends Controller {
      */
     public function display() {
 
-        $action = $_GET['action'] . "Action";
+        if (array_key_exists("userPermissionsNumber", $_SESSION))
+        {
+            $userLVL = $_SESSION["userPermissionsNumber"];
+            $action = "";
+            
+            switch($_GET["action"]) // TODO : modifier pour vérifier les droit selon l'action et le level de droit
+            {
+                case "list":
+                    $action = "listAction";
+                    break;
+
+                case "detail":
+                    if ($userLVL >= 50)
+                    {
+                        $action = "detailAction";
+                    }
+                    else
+                    {
+                        $action = "listAction";
+                    }
+                    break;
+
+                case "addTeacher":
+                    if ($userLVL >= 50)
+                    {
+                        $action = "addTeacherAction";
+                    }
+                    else
+                    {
+                        $action = "listAction";
+                    }
+                    break;
+
+                case "editTeacher":
+                    if ($userLVL >= 100)
+                    {
+                        $action = "editTeacherAction";
+                    }
+                    else
+                    {
+                        $action = "listAction";
+                    }
+                    break;
+
+                default:
+                    $action = "listAction";
+                    break;
+            }
+        }
+
+        //$action = $_GET['action'] . "Action"; // exemple
 
         // Appelle une méthode dans cette classe (ici, ce sera le nom + action (ex: listAction, detailAction, ...))
         return call_user_func(array($this, $action)); // permet d'appeler listAction() (ligne 31)
@@ -29,6 +79,41 @@ class TeacherController extends Controller {
      * @return string
      */
     private function listAction() {
+
+        if (array_key_exists("teacherInModification", $_SESSION))
+        {
+            unset($_SESSION["teacherInModification"]);
+        }
+        if (array_key_exists("idTeacherInModification", $_SESSION))
+        {
+            unset($_SESSION["idTeacherInModification"]);
+        }
+
+        if (array_key_exists("error", $_SESSION))
+        {
+            unset($_SESSION["error"]);
+        }
+        if (array_key_exists("surname", $_SESSION))
+        {
+            unset($_SESSION["surname"]);
+        }
+        if (array_key_exists("gender", $_SESSION))
+        {
+            unset($_SESSION["gender"]);
+        }
+        if (array_key_exists("nickname", $_SESSION))
+        {
+            unset($_SESSION["nickname"]);
+        }
+        if (array_key_exists("origineNickname", $_SESSION))
+        {
+            unset($_SESSION["origineNickname"]);
+        }
+        if (array_key_exists("section", $_SESSION))
+        {
+            unset($_SESSION["section"]);
+        }
+        
 
         // Instancie le modèle et va chercher les informations
         //$customerRepository = new CustomerRepository();

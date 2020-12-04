@@ -2,7 +2,6 @@
     session_start();
 
     $teacher = array();
-    $teacher["idTeacher"] = 
     $error = false;
 
     // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
@@ -88,11 +87,11 @@
 
     //var_dump($teacher);
 
-    if (!$error)
+    if (!$error) // pas d'erreurs, les modifications vont être enregistrées
     {
         include_once("Database.php");
         $database = new Database();
-        $database->editTeacher($_SESSION["idTecherInModification"], $teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
+        $database->editTeacher($_SESSION["idTeacherInModification"], $teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
 
         if (array_key_exists("surname", $_SESSION))
         {
@@ -124,16 +123,24 @@
             unset($_SESSION["error"]);
         }
 
-        if (array_key_exists("idTecherInModification", $_SESSION))
+        if (array_key_exists("idTeacherInModification", $_SESSION))
         {
-            unset($_SESSION["idTecherInModification"]);
+            unset($_SESSION["idTeacherInModification"]);
+        }
+        if (array_key_exists("teacherInModification", $_SESSION))
+        {
+            unset($_SESSION["teacherInModification"]);
         }
         
         header('Location: index.php?controller=teacher&action=list');
     }
     else
     {
-        header('Location: index.php?controller=teacher&action=editTeacher');
+        if (array_key_exists("teacherInModification", $_SESSION))
+        {
+            unset($_SESSION["teacherInModification"]);
+        }
+        header('Location: index.php?controller=teacher&action=editTeacher&id=' . $_SESSION["idTeacherInModification"]);
     }
     
 
