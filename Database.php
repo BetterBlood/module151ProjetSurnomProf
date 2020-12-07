@@ -11,7 +11,7 @@
 
  include_once('config.ini.php');
 
- class Database {
+ class Database { // JE TRAVAIL PENDANT TOUTES LES PAUSES !! J'AI BIEN LE DROIT DE PRENDRE DU TEMPS PENDANT LE COUR !!!!!!!!!!!!!!!
 
     // Variable de classe
     private $connector;
