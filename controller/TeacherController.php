@@ -1,9 +1,9 @@
 <?php
 /**
  * ETML
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
- * Controler pour gérer les clients
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Controler pour gérer les pages user
  */
 
 //include_once 'model/CustomerRepository.php';
@@ -22,50 +22,61 @@ class TeacherController extends Controller {
         if (array_key_exists("userPermissionsNumber", $_SESSION))
         {
             $userLVL = $_SESSION["userPermissionsNumber"];
-            
-            switch($_GET["action"]) // TODO : modifier pour vérifier les droit selon l'action et le level de droit
+
+            if (!array_key_exists("action", $_GET))
             {
-                case "list":
-                    $action = "listAction";
-                    break;
-
-                case "detail":
-                    if ($userLVL > 0)
-                    {
-                        $action = "detailAction";
-                    }
-                    else
-                    {
-                        $action = "listAction";
-                    }
-                    break;
-
-                case "addTeacher":
-                    if ($userLVL >= 50) // TODO : vérifier quel droit s'applique ici et à la page list (le bouton pour ajouter)
-                    {
-                        $action = "addTeacherAction";
-                    }
-                    else
-                    {
-                        $action = "listAction";
-                    }
-                    break;
-
-                case "editTeacher":
-                    if ($userLVL >= 75)
-                    {
-                        $action = "editTeacherAction";
-                    }
-                    else
-                    {
-                        $action = "listAction";
-                    }
-                    break;
-
-                default:
-                    $action = "listAction";
-                    break;
+                $action = "listAction";
             }
+            else 
+            {
+                switch($_GET["action"])
+                {
+                    case "list":
+                        $action = "listAction";
+                        break;
+
+                    case "detail":
+                        if ($userLVL > 0)
+                        {
+                            $action = "detailAction";
+                        }
+                        else
+                        {
+                            $action = "listAction";
+                        }
+                        break;
+
+                    case "addTeacher":
+                        if ($userLVL >= 50) // TODO : vérifier quel droit s'applique ici et à la page list (le bouton pour ajouter)
+                        {
+                            $action = "addTeacherAction";
+                        }
+                        else
+                        {
+                            $action = "listAction";
+                        }
+                        break;
+
+                    case "editTeacher":
+                        if ($userLVL >= 75)
+                        {
+                            $action = "editTeacherAction";
+                        }
+                        else
+                        {
+                            $action = "listAction";
+                        }
+                        break;
+
+                    default:
+                        $action = "listAction";
+                        break;
+                }
+            }
+        }
+        else 
+        {
+            $action = "listAction";
         }
 
         //$action = $_GET['action'] . "Action"; // exemple
@@ -148,10 +159,12 @@ class TeacherController extends Controller {
 
         include_once("Database.php");
         $database = new Database();
-        if (array_key_exists("id", $_GET))
+
+        if (array_key_exists("id", $_GET) && $database->teacherExist($_GET['id']))
         {
             $teacher = $database->getOneTeacher($_GET['id']);
         }
+
         //$customerRepository = new CustomerRepository();
         //$customer = $customerRepository->findOne($_GET['id']);
 

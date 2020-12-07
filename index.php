@@ -10,9 +10,9 @@ if (!array_key_exists("loged_in", $_SESSION))
 
 /**
  * ETML
- * Auteur :  Cindy Hardegger
- * Date: 22.01.2019
- * Site web en MVC et orienté objet
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Site web en MVC et orienté objet, page d'index
  */
 
 $debug = false;
@@ -36,14 +36,26 @@ class MainController {
      * Permet de sélectionner le bon contrôler et l'action
      */
     public function dispatch() {
+        
+        $currentLink = "";
 
-        if (!isset($_GET['controller'])) {
-            $_GET['controller'] = 'home';
-            $_GET['action'] = 'index';
+        if (array_key_exists("controller", $_GET) && array_key_exists("action", $_GET))
+        {
+            $currentLink = $this->menuSelected($_GET['controller'], $_GET["action"]);
+        }
+        else if (array_key_exists("controller", $_GET))
+        {
+            $currentLink = $this->menuSelected($_GET['controller'], "index");
+        }
+        else if (array_key_exists("action", $_GET))
+        {
+            $currentLink = $this->menuSelected("home", $_GET["action"]);
+        }
+        else
+        {
+            $currentLink = $this->menuSelected("home", "index");
         }
 
-
-        $currentLink = $this->menuSelected($_GET['controller']);
         $this->viewBuild($currentLink);
     }
 

@@ -1,3 +1,10 @@
+<!--
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * page update, gère la modification de teacher dans la database (appel editTeacher.php si nécessaire)
+-->
+
 <?php
     $erase = false;
 ?>
@@ -192,8 +199,5 @@
         <div class="pull-right" style="margin-right: 15px">
             <a href="index.php?controller=teacher&action=list" class="btn btn-warning">retour</a> <!-- TODO : faire du js pour un onclick qui clear $_SESSION["error"] et $_SESSION["teacherInModification"] -->
         </div>
-
-        
-
     </form>
 </div>

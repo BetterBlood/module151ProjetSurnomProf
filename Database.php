@@ -1,12 +1,10 @@
 <?php
 
 /**
- * 
- * TODO : � compl�ter
- * 
- * Auteur : 
- * Date : 
- * Description :
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Database, permet d'accèder à la database avec les droit du fichier config.ini.php
  */
 
  include_once('config.ini.php');
@@ -132,7 +130,7 @@
 
         $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE idTeacher = :id', $values); // appeler la méthode pour executer la requète
 
-        $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+        $teachers = $this->formatData($req); // appel de la méthode pour avoir le résultat sous forme de tableau
 
         $this->unsetData($req); // vide le jeu d'enregistrement
 
@@ -374,6 +372,23 @@
         foreach($users as $user)
         {
             if ($user["useUsername"] == $username)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function teacherExist($idTeacher)
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher', null);// appeler la méthode pour executer la requète
+
+        $techers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        foreach($techers as $teacher)
+        {
+            if ($teacher["idTeacher"] == $idTeacher)
             {
                 return true;
             }

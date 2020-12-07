@@ -1,3 +1,10 @@
+<!--
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * page add, gère l'ajout de teacher dans la database (appel insertTeacher.php si nécessaire)
+-->
+
 <?php
     $erase = false;
 
@@ -47,9 +54,10 @@
             var_dump($_SESSION);
             echo "test";
         } // */
+        // resources/image/iconLoupe.png
     ?>
 
-    <form action="insertTeacher.php" method="post">
+    <form action="view/page/teacher/insertTeacher.php" method="post"> 
 
         <div class="form-row" style="height: fit-content">
             <div class="form-group col-md-4 mb-3">

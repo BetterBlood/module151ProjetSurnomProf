@@ -1,8 +1,9 @@
 <?php
 /**
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
- * Contrôleur principal
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Controler principal
  */
 
 abstract class Controller {

@@ -1,8 +1,8 @@
 <?php
 /**
  * ETML
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
  * Controler pour gérer les pages classiques
  */
 
@@ -15,7 +15,14 @@ class HomeController extends Controller {
      */
     public function display() {
 
-        $action = $_GET['action'] . "Action";
+        if (array_key_exists("action", $_GET))
+        {
+            $action = $_GET['action'] . "Action";
+        }
+        else
+        {
+            $action = "indexAction";
+        }
 
         return call_user_func(array($this, $action));
     }
