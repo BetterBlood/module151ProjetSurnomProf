@@ -35,7 +35,7 @@ class MainController {
     /**
      * Permet de sélectionner le bon contrôler et l'action
      */
-    public function dispatch() { // JE TRAVAIL PENDANT TOUTES LES PAUSES !! J'AI BIEN LE DROIT DE PRENDRE DU TEMPS PENDANT LE COUR !!!!!!!!!!!!!!!
+    public function dispatch() {
         
         $currentLink = "";
 

@@ -47,9 +47,10 @@
             var_dump($_SESSION);
             echo "test";
         } // */
+        // resources/image/iconLoupe.png
     ?>
 
-    <form action="insertTeacher.php" method="post">
+    <form action="view/page/teacher/insertTeacher.php" method="post"> 
 
         <div class="form-row" style="height: fit-content">
             <div class="form-group col-md-4 mb-3">
