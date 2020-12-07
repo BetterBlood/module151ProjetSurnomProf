@@ -1,4 +1,10 @@
 <?php
+/**
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * page delete, gère la suppression de teacher dans la database
+ */
     session_start();
 
     include_once("../../../Database.php");

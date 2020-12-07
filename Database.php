@@ -1,12 +1,10 @@
 <?php
 
 /**
- * 
- * TODO : � compl�ter
- * 
- * Auteur : 
- * Date : 
- * Description :
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Database, permet d'accèder à la database avec les droit du fichier config.ini.php
  */
 
  include_once('config.ini.php');

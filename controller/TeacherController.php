@@ -1,9 +1,9 @@
 <?php
 /**
  * ETML
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
- * Controler pour gérer les clients
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Controler pour gérer les pages user
  */
 
 //include_once 'model/CustomerRepository.php';

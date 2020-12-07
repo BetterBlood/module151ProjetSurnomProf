@@ -1,3 +1,10 @@
+<!--
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * page add, gère l'ajout de teacher dans la database (appel insertTeacher.php si nécessaire)
+-->
+
 <?php
     $erase = false;
 

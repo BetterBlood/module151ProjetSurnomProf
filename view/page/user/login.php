@@ -1,4 +1,11 @@
 <?php
+/**
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * page login, gère la connection des la déconnection des utilisateurs
+ */
+
     session_start();
     //var_dump($_POST);
     $_SESSION["loginError"] = false;

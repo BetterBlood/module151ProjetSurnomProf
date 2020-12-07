@@ -10,9 +10,9 @@ if (!array_key_exists("loged_in", $_SESSION))
 
 /**
  * ETML
- * Auteur :  Cindy Hardegger
- * Date: 22.01.2019
- * Site web en MVC et orienté objet
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * Site web en MVC et orienté objet, page d'index
  */
 
 $debug = false;
