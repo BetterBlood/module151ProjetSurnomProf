@@ -88,6 +88,11 @@ class UserController extends Controller {
         return $content;
     }
 
+    /**
+     * permet de delete un utilisateur
+     * 
+     * @return string
+     */
     private function deleteUserAction() {
         include_once("Database.php");
 		$database = new Database();
@@ -100,6 +105,11 @@ class UserController extends Controller {
         return $content;
     }
 
+    /**
+     * permet d'atteindre la page d'insertion d'utilisateur
+     * 
+     * @return string
+     */
     private function insertUserAction() {
         include_once("Database.php");
 		$database = new Database();

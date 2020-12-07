@@ -180,7 +180,7 @@ class TeacherController extends Controller {
     /**
      * permet d'accèder à la page d'ajout de prof
      *
-     * @return void
+     * @return string
      */
     private function addTeacherAction() {
         include_once("Database.php");
@@ -195,6 +195,11 @@ class TeacherController extends Controller {
         return $content;
     }
 
+    /**
+     * permet d'accèder a la page de modification de prof
+     * 
+     * @return string
+     */
     private function editTeacherAction()
     {
         include_once("Database.php");

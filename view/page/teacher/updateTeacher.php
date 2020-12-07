@@ -32,7 +32,7 @@
         }
     ?>
 
-    <form action="editTeacher.php" method="post">
+    <form action="view/page/teacher/editTeacher.php" method="post">
 
         <div class="form-row" style="height: fit-content">
             <div class="form-group col-md-4 mb-3">
