@@ -187,6 +187,30 @@
     }
 
     /**
+     * ajout une section dans la base de dopnnée
+     *
+     * @param array() $section
+     * @return void
+     */
+    public function insertSection($section){
+
+        $values = array(
+            1 => array(
+                'marker' => ':secName',
+                'var' => $section["sectionName"],
+                'type' => PDO::PARAM_STR
+            )
+        );
+
+        $query =    "INSERT INTO t_section (secName) 
+                    VALUES (:secName)";
+
+        $req = $this->queryPrepareExecute($query, $values); // appeler la méthode pour executer la requète
+        
+        $this->unsetData($req);
+    }
+
+    /**
      * permet d'inserer un utilisateur dans la base de donnée
      * 
      * @param array $user
@@ -381,6 +405,30 @@
         $this->unsetData($req);
     }
 
+    /**
+     * permet de modifier une section dans la base de donnée
+     * 
+     * @param int $id
+     * @param array $section
+     * @return void
+     */
+    public function editSection($idSection,  $section)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':secName',
+                'var' => $section["secName"],
+                'type' => PDO::PARAM_STR
+            )
+        );
+
+        $query =   'UPDATE t_section SET secName = :secName WHERE idSection = ' . $idSection;
+
+        $req = $this->queryPrepareExecute($query, $values);
+
+        $this->unsetData($req);
+    }
+
     public function getAllUsers()
     {
         $req = $this->queryPrepareExecute('SELECT * FROM t_user', null);// appeler la méthode pour executer la requète
@@ -418,6 +466,23 @@
         foreach($techers as $teacher)
         {
             if ($teacher["idTeacher"] == $idTeacher)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function sectionExist($idSection)
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_section', null);// appeler la méthode pour executer la requète
+
+        $sections = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        foreach($sections as $section)
+        {
+            if ($section["idSection"] == $idSection)
             {
                 return true;
             }

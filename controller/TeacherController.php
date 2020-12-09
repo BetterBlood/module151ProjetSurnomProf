@@ -3,7 +3,7 @@
  * ETML
  * Auteur : Jeremiah Steiner
  * Date: 22.11.2020
- * Controler pour gérer les pages user
+ * Controler pour gérer les pages teacher
  */
 
 //include_once 'model/CustomerRepository.php';

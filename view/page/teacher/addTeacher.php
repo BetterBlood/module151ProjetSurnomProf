@@ -227,7 +227,7 @@
         </div>
 
         <div class="pull-right">
-            <button type="submit" class="btn btn-primary mb-2">Ajouter enseignant</button>
+            <button type="submit" class="btn btn-primary mb-2">Ajouter l'enseignant</button>
         </div>
 
         <div class="pull-right" style="margin-right: 15px">
