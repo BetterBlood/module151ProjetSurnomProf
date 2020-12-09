@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <!--
  * ETML
@@ -13,7 +16,6 @@
     </head>
     <body>
         <?php
-            session_start();
 
             $teacher = array();
             $error = false;

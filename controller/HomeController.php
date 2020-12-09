@@ -17,7 +17,18 @@ class HomeController extends Controller {
 
         if (array_key_exists("action", $_GET))
         {
-            $action = $_GET['action'] . "Action";
+            switch($_GET["action"])
+            {
+                case "index":
+                case "contact":
+                case "check":
+                    $action = $_GET['action'] . "Action";
+                    break;
+
+                default:
+                    $action = "indexAction";
+                    break;
+            }
         }
         else
         {
@@ -60,7 +71,7 @@ class HomeController extends Controller {
         return $content;
     }
 
-        /**
+    /**
      * Check Form action
      *
      * @return string

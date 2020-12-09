@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <!--
  * ETML
@@ -14,7 +18,6 @@
 
     <body>
         <?php
-        session_start();
 
         $teacher = array();
         $error = false;
@@ -147,7 +150,7 @@
                 unset($_SESSION["teacherInModification"]);
             }
             
-            header('Location: index.php?controller=teacher&action=list');
+            header('Location: ../../../index.php?controller=teacher&action=list');
         }
         else
         {
@@ -155,7 +158,7 @@
             {
                 unset($_SESSION["teacherInModification"]);
             }
-            header('Location: index.php?controller=teacher&action=editTeacher&id=' . $_SESSION["idTeacherInModification"]);
+            header('Location: ../../../index.php?controller=teacher&action=editTeacher&id=' . $_SESSION["idTeacherInModification"]);
         }
         ?>
     </body>

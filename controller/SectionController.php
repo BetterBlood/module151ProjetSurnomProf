@@ -3,12 +3,12 @@
  * ETML
  * Auteur : Jeremiah Steiner
  * Date: 22.11.2020
- * Controler pour gérer les utilisateurs
+ * Controler pour gérer les pages sections
  */
 
 //include_once 'model/CustomerRepository.php';
 
-class UserController extends Controller {
+class SectionController extends Controller {
 
     /**
      * Permet de choisir l'action à effectuer
@@ -21,24 +21,16 @@ class UserController extends Controller {
         
         switch($_GET["action"])
         {
-            case "manageUsers":
-                $action = "manageUsersAction";
-                break;
-
-            case "addUser":
-                $action = "addUserAction";
-                break;
-
-            case "deleteUser":
-                $action = "deleteUserAction";
-                break;
-
-            case "insertUser":
-                $action = "insertUserAction";
+            case "list":
+            case "addSection":
+            case "insertSection":
+            case "editSection":
+            case "detail":
+                $action = $_GET["action"] . 'Action';
                 break;
 
             default:
-                $action = "manageUsersAction";
+                $action = "listAction";
                 break;
         }
         //$action = $_GET['action'] . "Action"; // exemple
@@ -52,14 +44,15 @@ class UserController extends Controller {
      *
      * @return string
      */
-    private function manageUsersAction() {
+    private function listAction() {
 
         include_once("Database.php");
 		$database = new Database();
-		$users = $database->getAllUsers();
+        $sections = $database->getAllSections();
+        
 
         // Charge le fichier pour la vue
-        $view = file_get_contents('view/page/user/manageUsers.php');
+        $view = file_get_contents('view/page/section/list.php');
 
 
         // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
@@ -74,13 +67,40 @@ class UserController extends Controller {
     }
 
     /**
-     * permet d'accèder à la page d'ajout d' un compte
+     * Rechercher les données et les passe à la vue (en détail)
+     *
+     * @return string
+     */
+    private function detailAction() {
+
+        include_once("Database.php");
+        $database = new Database();
+
+        if (array_key_exists("id", $_GET) && $database->sectionExist($_GET['id']))
+        {
+            $section = $database->getOneSection($_GET['id']);
+        }
+
+        //$customerRepository = new CustomerRepository();
+        //$customer = $customerRepository->findOne($_GET['id']);
+
+        $view = file_get_contents('view/page/section/detail.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+    /**
+     * permet d'accèder à la page d'ajout de section
      *
      * @return void
      */
-    private function addUserAction() {
+    private function addSectionAction() {
 
-        $view = file_get_contents('view/page/user/addUser.php');
+        $view = file_get_contents('view/page/section/addSection.php');
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -89,32 +109,41 @@ class UserController extends Controller {
     }
 
     /**
-     * permet de delete un utilisateur
+     * permet d'atteindre la page d'insertion de section
      * 
      * @return string
      */
-    private function deleteUserAction() {
-        include_once("Database.php");
-		$database = new Database();
-
-        $view = file_get_contents('view/page/user/deleteUser.php');
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
-    }
-
-    /**
-     * permet d'atteindre la page d'insertion d'utilisateur
-     * 
-     * @return string
-     */
-    private function insertUserAction() {
+    private function insertSectionAction() {
         include_once("Database.php");
 		$database = new Database();
 
         $view = file_get_contents('view/page/user/insertUser.php');
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+    /**
+     * permet d'accèder a la page de modification de la section
+     * 
+     * @return string
+     */
+    private function editSectionAction()
+    {
+        include_once("Database.php");
+        $database = new Database();
+        $section = array();
+
+        if (array_key_exists("id", $_GET))
+        {
+            $section = $database->getOneSection($_GET['id']);
+        }
+        
+
+        $view = file_get_contents('view/page/section/updateSection.php');
+
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();

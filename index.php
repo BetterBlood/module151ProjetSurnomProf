@@ -28,6 +28,7 @@ include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
 include_once 'controller/TeacherController.php';
 include_once 'controller/userController.php';
+include_once 'controller/sectionController.php';
 
 
 class MainController {
@@ -76,6 +77,10 @@ class MainController {
 
             case 'teacher':
                 $link = new TeacherController();
+                break;
+
+            case 'section':
+                $link = new SectionController();
                 break;
 
             case 'facture':

@@ -186,6 +186,36 @@
         $this->unsetData($req);
     }
 
+    /**
+     * ajout une section dans la base de dopnnée
+     *
+     * @param array() $section
+     * @return void
+     */
+    public function insertSection($section){
+
+        $values = array(
+            1 => array(
+                'marker' => ':secName',
+                'var' => $section["sectionName"],
+                'type' => PDO::PARAM_STR
+            )
+        );
+
+        $query =    "INSERT INTO t_section (secName) 
+                    VALUES (:secName)";
+
+        $req = $this->queryPrepareExecute($query, $values); // appeler la méthode pour executer la requète
+        
+        $this->unsetData($req);
+    }
+
+    /**
+     * permet d'inserer un utilisateur dans la base de donnée
+     * 
+     * @param array $user
+     * @return void
+     */
     public function insertUser($user){
 
         $values = array(
@@ -237,6 +267,12 @@
         $this->unsetData($req);
     }
 
+    /**
+     * permet de supprimer un utilisateur de la base de donnée
+     * 
+     * @param int $id
+     * @return void
+     */
     public function deleteUser($id)
     {
         $values = array(
@@ -257,7 +293,7 @@
     /**
      * permet d'obtenir toutes les sections
      *
-     * @return void
+     * @return array
      */
     public function getAllSections(){
         
@@ -272,6 +308,9 @@
 
     /**
      * permet d'obtenir la section ayant l'id passé en param
+     * 
+     * @param int $id
+     * @return array
      */
     public function getOneSection($id){
 
@@ -284,6 +323,13 @@
         return $sections[0];// section désiré
     }
 
+    /**
+     * permet d'obtenir toutes les sections et de modifier l'instance courant du prof passé en parametre
+     * 
+     * @param int $id
+     * @param array $teacher
+     * @return array
+     */
     public function getAllSectionsAndThisTeacher($id, &$teacher)
     {
         $req = $this->queryPrepareExecute('SELECT * FROM t_section', null);// appeler la méthode pour executer la requète
@@ -307,37 +353,44 @@
         return $sections;
     }
 
+    /**
+     * permet de modifier un prof dans la base de donnée
+     * 
+     * @param int $id
+     * @param array $teacher
+     * @return void
+     */
     public function editTeacher($idTeacher,  $teacher)
     {
         $values = array(
             1 => array(
                 'marker' => ':surname',
-                'var' => $_POST["name"],
+                'var' => $teacher["name"],
                 'type' => PDO::PARAM_STR
             ),
             2 => array(
                 'marker' => ':firstname',
-                'var' => $_POST["firstname"],
+                'var' => $teacher["firstname"],
                 'type' => PDO::PARAM_STR
             ),
             3 => array(
                 'marker' => ':gender',
-                'var' => $_POST["gender"],
+                'var' => $teacher["gender"],
                 'type' => PDO::PARAM_STR
             ),
             4 => array(
                 'marker' => ':nickname',
-                'var' => $_POST["nickname"],
+                'var' => $teacher["nickname"],
                 'type' => PDO::PARAM_STR
             ),
             5 => array(
                 'marker' => ':origineNickname',
-                'var' => $_POST["origineNickname"],
+                'var' => $teacher["origineNickname"],
                 'type' => PDO::PARAM_STR
             ),
             6 => array(
                 'marker' => ':section',
-                'var' => $_POST["section"],
+                'var' => $teacher["section"],
                 'type' => PDO::PARAM_INT
             )
         );
@@ -346,6 +399,30 @@
                     teaLastName = :surname, teaFirstName = :firstname, teaGender = :gender,
                     teaNickname = :nickname, teaNicknameOrigin = :origineNickname, idSection = :section
                     WHERE idTeacher = ' . $idTeacher;
+
+        $req = $this->queryPrepareExecute($query, $values);
+
+        $this->unsetData($req);
+    }
+
+    /**
+     * permet de modifier une section dans la base de donnée
+     * 
+     * @param int $id
+     * @param array $section
+     * @return void
+     */
+    public function editSection($idSection,  $section)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':secName',
+                'var' => $section["secName"],
+                'type' => PDO::PARAM_STR
+            )
+        );
+
+        $query =   'UPDATE t_section SET secName = :secName WHERE idSection = ' . $idSection;
 
         $req = $this->queryPrepareExecute($query, $values);
 
@@ -389,6 +466,23 @@
         foreach($techers as $teacher)
         {
             if ($teacher["idTeacher"] == $idTeacher)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function sectionExist($idSection)
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_section', null);// appeler la méthode pour executer la requète
+
+        $sections = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        foreach($sections as $section)
+        {
+            if ($section["idSection"] == $idSection)
             {
                 return true;
             }
