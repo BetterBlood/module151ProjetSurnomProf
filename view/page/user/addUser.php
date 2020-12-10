@@ -1,3 +1,26 @@
+<!--
+ * ETML
+ * Auteur : Jeremiah Steiner
+ * Date: 22.11.2020
+ * page add, gère l'ajout de user dans la database (appel insertUser.php si nécessaire)
+-->
+
+<?php
+    // redirection vers la list des prof si jamais l'utilisateur n'a pas les droits nécessaires
+    if (!array_key_exists("userPermissionsNumber", $_SESSION))
+    {
+        header('Location: ../../../index.php?controller=teacher&action=list');
+    }
+    else
+    {
+        $userLVL = $_SESSION["userPermissionsNumber"];
+        
+        if ($userLVL < 100)
+        {
+            header('Location: ../../../index.php?controller=teacher&action=list');
+        }
+    }
+?>
 
 <div class="container">
     <h4>Ajouter un Compte</h4>

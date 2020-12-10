@@ -16,9 +16,12 @@
 			<div class="pull-right">
 				<?php
 
-				if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 50)
+				if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 75)
 				{
-					//echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="view/page/section/deleteSection.php?id=' . htmlspecialchars($section['idSection']) . '"><img src="resources/image/iconTrash.png" alt="image de poubelle pour supprimer la section de la base de donnée"></a>';
+					if ($_SESSION["userPermissionsNumber"] >= 100)
+					{
+						echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="view/page/section/deleteSection.php?id=' . htmlspecialchars($section['idSection']) . '"><img src="resources/image/iconTrash.png" alt="image de poubelle pour supprimer la section de la base de donnée"></a>';
+					}
 					echo '<a href="index.php?controller=section&action=editSection&id=' . htmlspecialchars($section['secName']) . '"><img src="resources/image/iconPencil.png" alt="image de crayon pour modifier la section"></a>';
 				}
 

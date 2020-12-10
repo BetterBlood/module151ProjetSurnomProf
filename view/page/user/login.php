@@ -27,30 +27,31 @@
             {
                 $_SESSION["loged_in"] = true;
                 $_SESSION["userName"] = $_POST["userName"];
+
                 $userLVL = (int) $database->getUserRight($_POST["userName"]);
                 $_SESSION["userPermissionsNumber"] = $userLVL;
 
                 switch ($userLVL) { // on set les permissions
                     case ($userLVL >= 100):
                         //var_dump($userLVL);
-                        $_SESSION["userPermissions"] = "superAdmin";
+                        $_SESSION["userPermissions"] = "superAdmin"; // (affichage)
                         //var_dump($_SESSION["userPermissions"]);
                         break;
                         
                     case ($userLVL >= 75):
-                        $_SESSION["userPermissions"] = "admin";
+                        $_SESSION["userPermissions"] = "admin"; // (affichage)
                         break;
 
                     case ($userLVL >= 50):
-                        $_SESSION["userPermissions"] = "user";
+                        $_SESSION["userPermissions"] = "user"; // (affichage)
                         break;
 
                     case ($userLVL > 0):
-                        $_SESSION["userPermissions"] = "noRight";
+                        $_SESSION["userPermissions"] = "noRight"; // (affichage)
                         break;
 
                     default:
-                        $_SESSION["userPermissions"] = "not set";
+                        $_SESSION["userPermissions"] = "not set"; // (affichage)
                         break;
                 }
             }

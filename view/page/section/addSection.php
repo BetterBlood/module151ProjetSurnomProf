@@ -5,6 +5,22 @@
  * page add, gère l'ajout de section dans la database (appel insertSection.php si nécessaire)
 -->
 <?php
+
+    // redirection vers la list des sections si jamais l'utilisateur n'a pas les droits nécessaires
+    if (!array_key_exists("userPermissionsNumber", $_SESSION))
+    {
+        header('Location: ../../../index.php?controller=section&action=list');
+    }
+    else
+    {
+        $userLVL = $_SESSION["userPermissionsNumber"];
+        
+        if ($userLVL < 75) // niveau admin
+        {
+            header('Location: ../../../index.php?controller=section&action=list');
+        }
+    }
+
     $erase = false;
 
     if (array_key_exists("reload", $_GET) && $_GET["reload"] === "true")

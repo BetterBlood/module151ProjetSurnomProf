@@ -6,6 +6,22 @@
 -->
 
 <?php
+
+    // redirection vers la list des prof si jamais l'utilisateur n'a pas les droits nécessaires
+    if (!array_key_exists("userPermissionsNumber", $_SESSION))
+    {
+        header('Location: ../../../index.php?controller=teacher&action=list');
+    }
+    else
+    {
+        $userLVL = $_SESSION["userPermissionsNumber"];
+        
+        if ($userLVL < 50) // niveau utilisateur
+        {
+            header('Location: ../../../index.php?controller=teacher&action=list');
+        }
+    }
+
     $erase = false;
 
     if (array_key_exists("reload", $_GET) && $_GET["reload"] === "true")

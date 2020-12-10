@@ -18,15 +18,40 @@ class SectionController extends Controller {
     public function display() {
 
         $action = "";
+
+        $userLVL = 1;
+
+        if (array_key_exists("userPermissionsNumber", $_SESSION))
+        {
+            $userLVL = $_SESSION["userPermissionsNumber"];
+        }
+        
         
         switch($_GET["action"])
         {
-            case "list":
             case "addSection":
             case "insertSection":
             case "editSection":
+                if ($userLVL >= 75)
+                {
+                    $action = $_GET["action"] . 'Action';
+                }
+                else
+                {
+                    $action = "listAction";
+                }
+                break;
+
+            case "list":
             case "detail":
-                $action = $_GET["action"] . 'Action';
+                if ($userLVL >= 50)
+                {
+                    $action = $_GET["action"] . 'Action';
+                }
+                else
+                {
+                    $action = "listAction";
+                }
                 break;
 
             default:
