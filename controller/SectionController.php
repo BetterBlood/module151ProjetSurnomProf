@@ -71,7 +71,7 @@ class SectionController extends Controller {
      */
     private function listAction() {
 
-        include_once("Database.php");
+        include_once("../model/Database.php");
 		$database = new Database();
         $sections = $database->getAllSections();
         
@@ -98,7 +98,7 @@ class SectionController extends Controller {
      */
     private function detailAction() {
 
-        include_once("Database.php");
+        include_once("../model/Database.php");
         $database = new Database();
 
         if (array_key_exists("id", $_GET) && $database->sectionExist($_GET['id']))

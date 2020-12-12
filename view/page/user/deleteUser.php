@@ -6,7 +6,7 @@
         {
             if (array_key_exists("id", $_GET))
             {
-                include_once("Database.php");
+                include_once("../model/Database.php");
                 $database = new Database();
                 $database->deleteUser($_GET["id"]); // TODO : voir si deleteUser() ne pourrait pas renvoyer un boolean
 

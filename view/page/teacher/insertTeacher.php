@@ -120,7 +120,7 @@
 
             if (!$error)
             {
-                include_once("../../../Database.php");
+                include_once("../../model/Database.php");
                 $database = new Database();
                 $database->insertTeacher($teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
 

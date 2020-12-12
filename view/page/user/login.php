@@ -18,7 +18,7 @@
     }
     else
     {
-        include_once("../../../Database.php");
+        include_once("../../model/Database.php");
         $database = new Database();
 
         if (array_key_exists("userName", $_POST) && $database->userExist($_POST["userName"])) // on vérifie si l'utilisateur existe // sinon on empeche la connection
