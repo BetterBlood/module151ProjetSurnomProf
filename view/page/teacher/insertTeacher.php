@@ -1,5 +1,20 @@
 <?php
     session_start();
+
+    // redirection vers la list des prof si jamais l'utilisateur n'a pas les droits nécessaires
+    if (!array_key_exists("userPermissionsNumber", $_SESSION))
+    {
+        header('Location: ../../../index.php?controller=teacher&action=list');
+    }
+    else
+    {
+        $userLVL = $_SESSION["userPermissionsNumber"];
+        
+        if ($userLVL < 50) // niveau utilisateur
+        {
+            header('Location: ../../../index.php?controller=teacher&action=list');
+        }
+    }
 ?>
 <!DOCTYPE html>
 <!--
@@ -105,7 +120,7 @@
 
             if (!$error)
             {
-                include_once("../../../Database.php");
+                include_once("../../../model/Database.php");
                 $database = new Database();
                 $database->insertTeacher($teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
 

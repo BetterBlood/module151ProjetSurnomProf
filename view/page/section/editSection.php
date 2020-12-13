@@ -18,6 +18,21 @@
 
     <body>
         <?php
+        
+        // redirection vers la list des sections si jamais l'utilisateur n'a pas les droits nécessaires
+        if (!array_key_exists("userPermissionsNumber", $_SESSION))
+        {
+            header('Location: ../../../index.php?controller=section&action=list');
+        }
+        else
+        {
+            $userLVL = $_SESSION["userPermissionsNumber"];
+            
+            if ($userLVL < 75) // niveau admin
+            {
+                header('Location: ../../../index.php?controller=section&action=list');
+            }
+        }
 
         $section = array();
         $error = false;
@@ -38,7 +53,7 @@
 
         if (!$error) // pas d'erreurs, les modifications vont être enregistrées
         {
-            include_once("../../../Database.php");
+            include_once("../../../model/Database.php");
             $database = new Database();
             $database->editSection($_SESSION["idSectionInModification"], $section); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
 

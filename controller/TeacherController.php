@@ -131,7 +131,7 @@ class TeacherController extends Controller {
         //$customerRepository = new CustomerRepository();
         //$customers = $customerRepository->findAll(); // est utiliser a la ligne 45
 
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
 		$teachers = $database->getAllTeachers();
 
@@ -157,7 +157,7 @@ class TeacherController extends Controller {
      */
     private function detailAction() {
 
-        include_once("Database.php");
+        include_once("model/Database.php");
         $database = new Database();
 
         if (array_key_exists("id", $_GET) && $database->teacherExist($_GET['id']))
@@ -183,7 +183,7 @@ class TeacherController extends Controller {
      * @return string
      */
     private function addTeacherAction() {
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
         $sections = $database->getAllSections();
 
@@ -202,7 +202,7 @@ class TeacherController extends Controller {
      */
     private function editTeacherAction()
     {
-        include_once("Database.php");
+        include_once("model/Database.php");
         $database = new Database();
         $teacher = array();
 

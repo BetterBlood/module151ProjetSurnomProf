@@ -18,15 +18,40 @@ class SectionController extends Controller {
     public function display() {
 
         $action = "";
+
+        $userLVL = 1;
+
+        if (array_key_exists("userPermissionsNumber", $_SESSION))
+        {
+            $userLVL = $_SESSION["userPermissionsNumber"];
+        }
+        
         
         switch($_GET["action"])
         {
-            case "list":
             case "addSection":
             case "insertSection":
             case "editSection":
+                if ($userLVL >= 75)
+                {
+                    $action = $_GET["action"] . 'Action';
+                }
+                else
+                {
+                    $action = "listAction";
+                }
+                break;
+
+            case "list":
             case "detail":
-                $action = $_GET["action"] . 'Action';
+                if ($userLVL >= 1)
+                {
+                    $action = $_GET["action"] . 'Action';
+                }
+                else
+                {
+                    $action = "listAction";
+                }
                 break;
 
             default:
@@ -46,7 +71,7 @@ class SectionController extends Controller {
      */
     private function listAction() {
 
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
         $sections = $database->getAllSections();
         
@@ -73,7 +98,7 @@ class SectionController extends Controller {
      */
     private function detailAction() {
 
-        include_once("Database.php");
+        include_once("model/Database.php");
         $database = new Database();
 
         if (array_key_exists("id", $_GET) && $database->sectionExist($_GET['id']))
@@ -114,10 +139,10 @@ class SectionController extends Controller {
      * @return string
      */
     private function insertSectionAction() {
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
 
-        $view = file_get_contents('view/page/user/insertUser.php');
+        $view = file_get_contents('view/page/user/insertSection.php');
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -132,7 +157,7 @@ class SectionController extends Controller {
      */
     private function editSectionAction()
     {
-        include_once("Database.php");
+        include_once("model/Database.php");
         $database = new Database();
         $section = array();
 

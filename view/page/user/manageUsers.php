@@ -1,3 +1,21 @@
+<?php
+	// redirection vers la list des prof si jamais l'utilisateur n'a pas les droits nécessaires
+    if (!array_key_exists("userPermissionsNumber", $_SESSION))
+    {
+        header('Location: ../../../index.php?controller=teacher&action=list');
+    }
+    else
+    {
+        $userLVL = $_SESSION["userPermissionsNumber"];
+        
+        if ($userLVL < 100)
+        {
+            header('Location: ../../../index.php?controller=teacher&action=list');
+        }
+    }
+?>
+
+
 <div class="container">
 
 	<h2>Liste des comptes</h2>

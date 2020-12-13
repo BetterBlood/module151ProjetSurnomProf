@@ -5,6 +5,7 @@
  * Auteur : Jeremiah Steiner
  * Date: 22.11.2020
  * Database, permet d'accèder à la database avec les droit du fichier config.ini.php
+ * TODO : plugin : PHP DocBlocker
  */
 
  include_once('config.ini.php');
@@ -87,13 +88,21 @@
     }
 
     /**
-     * détrui le connector
+     * détruit la requete et le connecteur
+     *
+     * @param [type] $req
+     * @return void
      */
     private function unsetData($req){
         $req->closeCursor();
-        $this->destroyConnector();
+        //$this->destroyConnector();
     }
 
+    /**
+     * détruit le connecteur
+     *
+     * @return void
+     */
     private function destroyConnector(){
         $this->connector = null;
         unset($this->connector);
@@ -102,7 +111,7 @@
     /**
      * récupère tous les enseignants de la database
      *
-     * @return void
+     * @return array()
      */
     public function getAllTeachers(){
         
@@ -117,6 +126,9 @@
 
     /**
      * permet d'obtenir un prof depuis son id
+     *
+     * @param int $id
+     * @return array()
      */
     public function getOneTeacher($id){
 
@@ -268,6 +280,41 @@
     }
 
     /**
+     * permet de retirer une section de la base de donnée
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function deleteSection($id)
+    {
+        $teachers = $this->getAllTeachers();
+
+        foreach($teachers as $teacher) // vérifier qu'aucun prof n'est dans cette section
+        {
+            if ($teacher["idSection"] == $id)
+            {
+                return false;
+            }
+        }
+
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $query = "DELETE FROM t_section WHERE t_section.idSection = :id";
+
+        $req = $this->queryPrepareExecute($query, $values);
+
+        $this->unsetData($req);
+
+        return true;
+    }
+
+    /**
      * permet de supprimer un utilisateur de la base de donnée
      * 
      * @param int $id
@@ -296,8 +343,9 @@
      * @return array
      */
     public function getAllSections(){
-        
-        $req = $this->queryPrepareExecute('SELECT * FROM t_section', null);// appeler la méthode pour executer la requète
+        //$req = $this->queryPrepareExecute('SELECT * FROM t_section', null);
+        $req = $this->queryPrepareExecute('SELECT t_section.idSection, t_section.secName, Count(t_teacher.idTeacher) as "nbrTeacher" FROM t_section LEFT JOIN t_teacher 
+        ON t_teacher.idSection = t_section.idSection GROUP BY t_section.idSection', null);// appeler la méthode pour executer la requète
 
         $sections = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
 
@@ -429,6 +477,11 @@
         $this->unsetData($req);
     }
 
+    /**
+     * permet d'obtenir tout les utilisateur de la database
+     *
+     * @return array
+     */
     public function getAllUsers()
     {
         $req = $this->queryPrepareExecute('SELECT * FROM t_user', null);// appeler la méthode pour executer la requète
@@ -440,6 +493,12 @@
         return $users;// retour tous les users
     }
 
+    /**
+     * vérifie dans la database si un utilisateur a le même username
+     *
+     * @param string $username
+     * @return void
+     */
     public function userExist($username)
     {
         $req = $this->queryPrepareExecute('SELECT * FROM t_user', null);// appeler la méthode pour executer la requète
@@ -457,6 +516,12 @@
         return false;
     }
 
+    /**
+     * vérifie si le teacher avec l'id donné exist
+     *
+     * @param int $idTeacher
+     * @return void
+     */
     public function teacherExist($idTeacher)
     {
         $req = $this->queryPrepareExecute('SELECT * FROM t_teacher', null);// appeler la méthode pour executer la requète
