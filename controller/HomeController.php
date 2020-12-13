@@ -77,6 +77,7 @@ class HomeController extends Controller {
      * @return string
      */
     private function checkAction() {
+        // j'ai gardé cette partie juste pour l'estetic visuel du site //
 
         $lastName = htmlspecialchars($_POST['lastName']);
         $firstName = htmlspecialchars($_POST['firstName']);

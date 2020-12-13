@@ -539,6 +539,12 @@
         return false;
     }
 
+    /**
+     * vérifie que l'id de section passé en param exist
+     *
+     * @param int $idSection
+     * @return bool 
+     */
     public function sectionExist($idSection)
     {
         $req = $this->queryPrepareExecute('SELECT * FROM t_section', null);// appeler la méthode pour executer la requète
@@ -556,6 +562,13 @@
         return false;
     }
 
+    /**
+     * fonction qui s'occupe de vérifier l'autentissité de l'utilisateur à l'aide de son mot de passe
+     *
+     * @param string $username
+     * @param string $password
+     * @return bool
+     */
     public function verifyPassword($username, $password)
     {
         $values = array(
@@ -569,11 +582,17 @@
         $req = $this->queryPrepareExecute('SELECT usePassword FROM t_user WHERE useUsername = :username', $values);
 
         $hashedPassword = $this->formatData($req)[0]["usePassword"];
-        //var_dump($hashedPassword);
+        //var_dump($hashedPassword); // DEBUG 
 
         return password_verify($password, $hashedPassword); 
     }
 
+    /**
+     * permet d'obtenir la valeur des droits de l'utilisateur passé en parametre (1-100)
+     *
+     * @param string $username
+     * @return void
+     */
     public function getUserRight($username)
     {
         $values = array(
@@ -590,9 +609,7 @@
 
         return $right; 
     }
-
-    // + tous les autres méthodes dont vous aurez besoin pour la suite (insertTeacher ... etc)
+    
  }
-
 
 ?>
