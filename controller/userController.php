@@ -54,7 +54,7 @@ class UserController extends Controller {
      */
     private function manageUsersAction() {
 
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
 		$users = $database->getAllUsers();
 
@@ -94,7 +94,7 @@ class UserController extends Controller {
      * @return string
      */
     private function deleteUserAction() {
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
 
         $view = file_get_contents('view/page/user/deleteUser.php');
@@ -111,7 +111,7 @@ class UserController extends Controller {
      * @return string
      */
     private function insertUserAction() {
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
 
         $view = file_get_contents('view/page/user/insertUser.php');

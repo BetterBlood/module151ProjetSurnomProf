@@ -44,7 +44,7 @@ class SectionController extends Controller {
 
             case "list":
             case "detail":
-                if ($userLVL >= 50)
+                if ($userLVL >= 1)
                 {
                     $action = $_GET["action"] . 'Action';
                 }
@@ -71,7 +71,7 @@ class SectionController extends Controller {
      */
     private function listAction() {
 
-        include_once("../model/Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
         $sections = $database->getAllSections();
         
@@ -98,7 +98,7 @@ class SectionController extends Controller {
      */
     private function detailAction() {
 
-        include_once("../model/Database.php");
+        include_once("model/Database.php");
         $database = new Database();
 
         if (array_key_exists("id", $_GET) && $database->sectionExist($_GET['id']))
@@ -139,10 +139,10 @@ class SectionController extends Controller {
      * @return string
      */
     private function insertSectionAction() {
-        include_once("Database.php");
+        include_once("model/Database.php");
 		$database = new Database();
 
-        $view = file_get_contents('view/page/user/insertUser.php');
+        $view = file_get_contents('view/page/user/insertSection.php');
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -157,7 +157,7 @@ class SectionController extends Controller {
      */
     private function editSectionAction()
     {
-        include_once("Database.php");
+        include_once("model/Database.php");
         $database = new Database();
         $section = array();
 

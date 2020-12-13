@@ -40,6 +40,7 @@ class MainController {
         
         $currentLink = "";
 
+        //gestion d'erreur de lien
         if (array_key_exists("controller", $_GET) && array_key_exists("action", $_GET))
         {
             $currentLink = $this->menuSelected($_GET['controller'], $_GET["action"]);
@@ -70,6 +71,7 @@ class MainController {
 
         $link = "";
 
+        // attribution du controlleur
         switch($page){
             case 'home':
                 $link = new HomeController();

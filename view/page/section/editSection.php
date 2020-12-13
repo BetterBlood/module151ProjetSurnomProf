@@ -53,7 +53,7 @@
 
         if (!$error) // pas d'erreurs, les modifications vont être enregistrées
         {
-            include_once("../../model/Database.php");
+            include_once("../../../model/Database.php");
             $database = new Database();
             $database->editSection($_SESSION["idSectionInModification"], $section); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
 

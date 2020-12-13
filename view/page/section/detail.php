@@ -22,7 +22,7 @@
 					{
 						echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="view/page/section/deleteSection.php?id=' . htmlspecialchars($section['idSection']) . '"><img src="resources/image/iconTrash.png" alt="image de poubelle pour supprimer la section de la base de donnée"></a>';
 					}
-					echo '<a href="index.php?controller=section&action=editSection&id=' . htmlspecialchars($section['secName']) . '"><img src="resources/image/iconPencil.png" alt="image de crayon pour modifier la section"></a>';
+					echo '<a href="index.php?controller=section&action=editSection&id=' . htmlspecialchars($section['idSection']) . '"><img src="resources/image/iconPencil.png" alt="image de crayon pour modifier la section"></a>';
 				}
 
 				?>
