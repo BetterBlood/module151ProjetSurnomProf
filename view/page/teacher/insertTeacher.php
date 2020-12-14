@@ -14,6 +14,10 @@
         {
             header('Location: ../../../index.php?controller=teacher&action=list');
         }
+
+        include_once("../../../model/Database.php");
+        $database = new Database();
+        $sections = $database->getAllSections();
     }
 ?>
 <!DOCTYPE html>
@@ -38,7 +42,7 @@
             // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
             $_SESSION["error"] = "";
 
-            if (array_key_exists("name", $_POST) && $_POST["name"] != "" && $_POST["name"] != " ") 
+            if (array_key_exists("name", $_POST) && $_POST["name"] != "" && $_POST["name"] != " " && preg_match('/^[A-Za-z \']*(-[A-Za-z \']*)*$/',htmlspecialchars($_POST['name']))) 
             {
                 $teacher["name"] = $_POST["name"];
                 $_SESSION["surname"] = $_POST["name"];
@@ -51,7 +55,7 @@
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("firstname", $_POST) && $_POST["firstname"] != "" && $_POST["firstname"] != " ")
+            if (array_key_exists("firstname", $_POST) && $_POST["firstname"] != "" && $_POST["firstname"] != " " && preg_match('/^[A-Za-z \']*(-[A-Za-z \']*)*$/',htmlspecialchars($_POST['firstname'])))
             {
                 $teacher["firstname"] = $_POST["firstname"];
                 $_SESSION["firstname"] = $_POST["firstname"];
@@ -103,8 +107,9 @@
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("section", $_POST) && $_POST["section"] != "-1" && $_POST["section"] != "0")
+            if (array_key_exists("section", $_POST) && $_POST["section"] != "-1" && $_POST["section"] != "0" && $database->sectionExist($_POST["section"]))
             {
+                
                 $teacher["section"] = (int)$_POST["section"];
                 $_SESSION["section"] = $_POST["section"];
             }
@@ -120,7 +125,6 @@
 
             if (!$error)
             {
-                include_once("../../../model/Database.php");
                 $database = new Database();
                 $database->insertTeacher($teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
 

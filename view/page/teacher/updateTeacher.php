@@ -53,7 +53,7 @@
             <div class="form-group col-md-4 mb-3">
                 <label for="name">Nom</label>
                 <?php
-                    echo '<input type="text" class="form-control" name="name" id="name" placeholder="Laurent" ' . 'value="' . $teacher["teaLastName"] . '"';
+                    echo '<input type="text" class="form-control" name="name" id="name" placeholder="' . $teacher["teaLastName"] . '" ' . 'value="' . $teacher["teaLastName"] . '"';
 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "surname") !== false)
                     {
@@ -67,7 +67,7 @@
             <div class="form-group col-md-4 mb-3">
                 <label for="firstname">Prénom</label>
                 <?php
-                    echo '<input type="text" class="form-control" name="firstname" id="firstname" placeholder="Duding" ' . 'value="' . $teacher["teaFirstName"] . '"';
+                    echo '<input type="text" class="form-control" name="firstname" id="firstname" placeholder="' . $teacher["teaFirstName"] . '" ' . 'value="' . $teacher["teaFirstName"] . '"';
 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "firstname") !== false)
                     {
@@ -94,7 +94,7 @@
                     
                         echo '<input class="form-check-input" type="radio" name="gender" id="m" value="m" ';
 
-                        if (array_key_exists("teaGender", $teacher) && !$erase && $teacher["teaGender"] == "m")
+                        if (array_key_exists("teaGender", $teacher) && $teacher["teaGender"] == "m")
                         {
                             echo 'checked';
                         }
@@ -106,7 +106,7 @@
                     <?php
                         echo '<input class="form-check-input" type="radio" name="gender" id="w" value="w" ';
 
-                        if (array_key_exists("teaGender", $teacher) && !$erase && $teacher["teaGender"] == "w")
+                        if (array_key_exists("teaGender", $teacher) && $teacher["teaGender"] == "w")
                         {
                             echo 'checked';
                         }
@@ -118,7 +118,7 @@
                     <?php
                         echo '<input class="form-check-input" type="radio" name="gender" id="o" value="o" ';
 
-                        if (array_key_exists("teaGender", $teacher) && !$erase && $teacher["teaGender"] == "o")
+                        if (array_key_exists("teaGender", $teacher) && $teacher["teaGender"] == "o")
                         {
                             echo 'checked';
                         }
@@ -134,12 +134,7 @@
             <div class="form-group">
                 <label for="nickname">Surnom</label>
                 <?php
-                    echo '<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Ding Dgin Ding" ';
-
-                    if (array_key_exists("teaNickname", $teacher) && !$erase)
-                    {
-                        echo 'value="' . $teacher["teaNickname"] . '" ';
-                    }
+                    echo '<input type="text" class="form-control" name="nickname" id="nickname" placeholder="' . $teacher["teaNickname"] . '" value="' . $teacher["teaNickname"] . '" ';
 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "nickname") !== false)
                     {
@@ -156,7 +151,7 @@
             <div class="form-group">
                 <label for="origineNickname">Origine du surnom</label>
                 <?php
-                    echo '<textarea class="form-control" name="origineNickname" id="origineNickname" placeholder="il a sonné l\'heure" rows="3" ';
+                    echo '<textarea class="form-control" name="origineNickname" id="origineNickname" placeholder="' . $teacher["teaNickname"] . '" rows="3" ';
 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "origineNickname") !== false)
                     {
@@ -164,10 +159,7 @@
                     }
                     echo '>';
                     
-                    if (array_key_exists("teaNicknameOrigin", $teacher) && !$erase)
-                    {
-                        echo $teacher["teaNicknameOrigin"];
-                    }
+                    echo $teacher["teaNicknameOrigin"];
 
                     echo '</textarea>';
                 ?>
@@ -196,7 +188,7 @@
                     foreach ($sections as $section) {
                         echo '<option value="' . $section["idSection"] . '"';
 
-                        if (array_key_exists("idSection", $teacher) && !$erase && $teacher["idSection"] == $section["idSection"])
+                        if (array_key_exists("idSection", $teacher) && $teacher["idSection"] == $section["idSection"])
                         {
                             echo 'selected';
                         }
