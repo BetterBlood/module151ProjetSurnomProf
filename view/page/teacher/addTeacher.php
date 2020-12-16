@@ -24,6 +24,7 @@
 
     $erase = false;
 
+    // reset des variables de session si on le désire
     if (array_key_exists("reload", $_GET) && $_GET["reload"] === "true")
     {
         $erase = true;

@@ -37,7 +37,7 @@
         $section = array();
         $error = false;
 
-        // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
+        // TODO : si le temps le permet : pregmatch
         $_SESSION["error"] = "";
 
         if (array_key_exists("secName", $_POST) && $_POST["secName"] != "" && $_POST["secName"] != " ") 
@@ -55,7 +55,7 @@
         {
             include_once("../../../model/Database.php");
             $database = new Database();
-            $database->editSection($_SESSION["idSectionInModification"], $section); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
+            $database->editSection($_SESSION["idSectionInModification"], $section); // TODO : si le temps le permet : faire une vérification de l'ajout, si réussi effacer les variables de session
 
             if (array_key_exists("secName", $_SESSION))
             {

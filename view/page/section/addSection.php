@@ -70,7 +70,7 @@
         </div>
 
         <div class="pull-right" style="margin-right: 15px">
-            <a href="index.php?controller=section&action=list" class="btn btn-warning">retour</a> <!-- TODO : faire du js pour un onclick qui clear les variables de la session (pas toutes)-->
+            <a href="index.php?controller=section&action=list" class="btn btn-warning">retour</a> <!-- TODO : ptetre faire du js pour un onclick qui clear les variables de la session (pas toutes)-->
         </div>
 
         <div class="pull-right" style="margin-right: 15px">

@@ -1,6 +1,6 @@
 
 <div class="container">
-    <nav class="pull-right">
+    <div class="pull-right">
         <form action="view/page/user/login.php" method="post">
             <div class="form-row form-inline" style="height:fit-content">
                 <?php 
@@ -57,7 +57,7 @@
                 ?>
             </div>
         </form>
-    </nav>
+    </div>
 
     <div class="masthead">
         <h3 class="text-muted">Surnom des enseignants</h3>
