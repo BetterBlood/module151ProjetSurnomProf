@@ -8,9 +8,16 @@
             {
                 include_once("../model/Database.php");
                 $database = new Database();
-                $database->deleteUser($_GET["id"]); // TODO : voir si deleteUser() ne pourrait pas renvoyer un boolean
 
-                header('Location: index.php?controller=user&action=manageUser&delete=true');
+                if ($database->userExist($_GET["id"]))
+                {
+                    $database->deleteUser($_GET["id"]);
+                    header('Location: index.php?controller=user&action=manageUser&delete=true');
+                }
+                else
+                {
+                    header('Location: index.php?controller=user&action=manageUser&delete=false');
+                }
             }
             else
             {

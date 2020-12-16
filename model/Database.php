@@ -60,7 +60,7 @@
      * @return PDOStatement
      */
     private function queryPrepareExecute($query, $binds){
-        
+    
         $req = $this->connector->prepare($query); // requette
 
         if ($binds != null)

@@ -39,36 +39,48 @@
             $teacher = array();
             $error = false;
 
-            // TODO : ptetre voir s'il faut faire des pregmatch, etc avec des vérification de string
             $_SESSION["error"] = "";
-
-            if (array_key_exists("name", $_POST) && $_POST["name"] != "" && $_POST["name"] != " " && preg_match('/^[A-Za-z \']*(-[A-Za-z \']*)*$/',htmlspecialchars($_POST['name']))) 
+            
+            // vérification de l'intégrité du nom
+            if (array_key_exists("name", $_POST) && trim($_POST["name"]) != "" && $_POST["name"] != " " && preg_match('/^[A-Za-z]*(((-)|(\')|( )){1}[A-Za-z]+)*$/', htmlspecialchars($_POST['name']))) 
             {
-                $teacher["name"] = $_POST["name"];
-                $_SESSION["surname"] = $_POST["name"];
+                $teacher["name"] = trim($_POST["name"]);
+                $_SESSION["surname"] = trim($_POST["name"]);
             }
             else
             {
                 $_SESSION["error"] .= "surname";
                 $error = true;
+
+                if (array_key_exists("name", $_POST))
+                {
+                    $_SESSION["surname"] = trim($_POST["name"]);
+                }
             }
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("firstname", $_POST) && $_POST["firstname"] != "" && $_POST["firstname"] != " " && preg_match('/^[A-Za-z \']*(-[A-Za-z \']*)*$/',htmlspecialchars($_POST['firstname'])))
+            // vérification de l'intégrité du prénom
+            if (array_key_exists("firstname", $_POST) && trim($_POST["firstname"]) != "" && $_POST["firstname"] != " " && preg_match('/^[A-Za-z]*(((-)|(\')|( )){1}[A-Za-z]+)*$/', htmlspecialchars($_POST['firstname'])))
             {
-                $teacher["firstname"] = $_POST["firstname"];
-                $_SESSION["firstname"] = $_POST["firstname"];
+                $teacher["firstname"] = trim($_POST["firstname"]);
+                $_SESSION["firstname"] = trim($_POST["firstname"]);
             }
             else
             {
                 $_SESSION["error"] .= "firstname";
                 $error = true;
+
+                if (array_key_exists("firstname", $_POST))
+                {
+                    $_SESSION["firstname"] = trim($_POST["firstname"]);
+                }
             }
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("gender", $_POST) && ($_POST["gender"] == 'm' || $_POST["gender"] == 'w' || $_POST["gender"] == 'o'))
+            // vérification de l'intégrité du genre
+            if (array_key_exists("gender", $_POST) && ($_POST["gender"] == 'm' || $_POST["gender"] == 'w' || $_POST["gender"] == 'o')) // pas de pregmatch (autre solution utilisée)
             {
                 $teacher["gender"] = $_POST["gender"];
                 $_SESSION["gender"] = $_POST["gender"];
@@ -77,37 +89,55 @@
             {
                 $_SESSION["error"] .= "gender";
                 $error = true;
+
+                if (array_key_exists("gender", $_POST))
+                {
+                    $_SESSION["gender"] = $_POST["gender"];
+                }
             }
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("nickname", $_POST) && $_POST["nickname"] != "" && $_POST["nickname"] != " ")
+            // vérification de l'intégrité du surnom
+            if (array_key_exists("nickname", $_POST) && trim($_POST["nickname"]) != "" && $_POST["nickname"] != " ") // pas de pregmatch (tous charactères autorisés)
             {
-                $teacher["nickname"] = $_POST["nickname"];
-                $_SESSION["nickname"] = $_POST["nickname"];
+                $teacher["nickname"] = trim($_POST["nickname"]);
+                $_SESSION["nickname"] = trim($_POST["nickname"]);
             }
             else
             {
                 $_SESSION["error"] .= "nickname";
                 $error = true;
+
+                if (array_key_exists("nickname", $_POST))
+                {
+                    $_SESSION["nickname"] = trim($_POST["nickname"]);
+                }
             }
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("origineNickname", $_POST) && $_POST["origineNickname"] != "" && $_POST["origineNickname"] != " ")
+            // vérification de l'intégrité de l'origine du surnom
+            if (array_key_exists("origineNickname", $_POST) && trim($_POST["origineNickname"]) != "" && $_POST["origineNickname"] != " ") // pas de pregmatch (tous charactères autorisés)
             {
-                $teacher["origineNickname"] = $_POST["origineNickname"];
-                $_SESSION["origineNickname"] = $_POST["origineNickname"];
+                $teacher["origineNickname"] = trim($_POST["origineNickname"]);
+                $_SESSION["origineNickname"] = trim($_POST["origineNickname"]);
             }
             else
             {
                 $_SESSION["error"] .= "origineNickname";
                 $error = true;
+
+                if (array_key_exists("origineNickname", $_POST))
+                {
+                    $_SESSION["origineNickname"] = trim($_POST["origineNickname"]);
+                }
             }
 
             $_SESSION["error"] .= ",";
 
-            if (array_key_exists("section", $_POST) && $_POST["section"] != "-1" && $_POST["section"] != "0" && $database->sectionExist($_POST["section"]))
+            // vérification de l'intégrité de la section
+            if (array_key_exists("section", $_POST) && $_POST["section"] != "-1" && $_POST["section"] != "0" && $database->sectionExist($_POST["section"])) // pas de pregmatch (sectionExist() suffit)
             {
                 
                 $teacher["section"] = (int)$_POST["section"];
@@ -117,6 +147,11 @@
             {
                 $_SESSION["error"] .= "section";
                 $error = true;
+
+                if (array_key_exists("section", $_POST))
+                {
+                    $_SESSION["section"] = $_POST["section"];
+                }
             }
 
             //var_dump($_SESSION);
@@ -126,7 +161,7 @@
             if (!$error)
             {
                 $database = new Database();
-                $database->insertTeacher($teacher); // TODO : ptetre faire une vérification de l'ajout et si réussi effacer les variable de session
+                $database->insertTeacher($teacher); // TODO : si le temps le permet : faire une vérification de l'ajout, si réussi effacer les variables de session
 
                 if (array_key_exists("surname", $_SESSION))
                 {

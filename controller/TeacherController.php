@@ -47,7 +47,7 @@ class TeacherController extends Controller {
                         break;
 
                     case "addTeacher":
-                        if ($userLVL >= 50) // TODO : vérifier quel droit s'applique ici et à la page list (le bouton pour ajouter)
+                        if ($userLVL >= 50)
                         {
                             $action = "addTeacherAction";
                         }
