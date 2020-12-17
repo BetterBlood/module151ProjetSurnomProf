@@ -68,6 +68,18 @@ class TeacherController extends Controller {
                         }
                         break;
 
+                    case "restoreArchiveList":
+                    case "archiveList":
+                        if ($userLVL >= 75)
+                        {
+                            $action = "archiveListAction";
+                        }
+                        else
+                        {
+                            $action = "listAction";
+                        }
+                        break;
+
                     default:
                         $action = "listAction";
                         break;
@@ -105,6 +117,7 @@ class TeacherController extends Controller {
         {
             unset($_SESSION["error"]);
         }
+
         if (array_key_exists("surname", $_SESSION))
         {
             unset($_SESSION["surname"]);
@@ -133,8 +146,77 @@ class TeacherController extends Controller {
 
         include_once("model/Database.php");
 		$database = new Database();
-		$teachers = $database->getAllTeachers();
+        $teachers = $database->getAllActiveTeachers();
+        $deletedTeacher = false;
 
+        // Charge le fichier pour la vue
+        $view = file_get_contents('view/page/teacher/list.php');
+
+
+        // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
+        // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
+        ob_start();
+        // eval permet de prendre le fichier de vue et de le parcourir dans le but de remplacer les variables PHP par leur valeur (provenant du model)
+        eval('?>' . $view);
+        // ob_get_clean permet de reprendre la lecture qui avait été stoppée (dans le but d'afficher la vue)
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+    /**
+     * Rechercher les données et les passe à la vue (en liste)
+     *
+     * @return string
+     */
+    private function archiveListAction() {
+
+        if (array_key_exists("teacherInModification", $_SESSION))
+        {
+            unset($_SESSION["teacherInModification"]);
+        }
+        if (array_key_exists("idTeacherInModification", $_SESSION))
+        {
+            unset($_SESSION["idTeacherInModification"]);
+        }
+
+        if (array_key_exists("error", $_SESSION))
+        {
+            unset($_SESSION["error"]);
+        }
+
+        if (array_key_exists("surname", $_SESSION))
+        {
+            unset($_SESSION["surname"]);
+        }
+        if (array_key_exists("gender", $_SESSION))
+        {
+            unset($_SESSION["gender"]);
+        }
+        if (array_key_exists("nickname", $_SESSION))
+        {
+            unset($_SESSION["nickname"]);
+        }
+        if (array_key_exists("origineNickname", $_SESSION))
+        {
+            unset($_SESSION["origineNickname"]);
+        }
+        if (array_key_exists("section", $_SESSION))
+        {
+            unset($_SESSION["section"]);
+        }
+
+        include_once("model/Database.php");
+        $database = new Database();
+
+        if (array_key_exists("restoreAll", $_GET) && $_GET["restoreAll"] == "true")
+        {
+            $database->restoreWholeTeachers();
+        }
+        
+        $teachers = $database->getAllDeletedTeachers();
+        $deletedTeacher = true;
+        
         // Charge le fichier pour la vue
         $view = file_get_contents('view/page/teacher/list.php');
 
