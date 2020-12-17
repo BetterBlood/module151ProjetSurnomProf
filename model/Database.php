@@ -125,6 +125,78 @@
     }
 
     /**
+     * récupère tous les enseignants non delete de la database
+     *
+     * @return array()
+     */
+    public function getAllActiveTeachers(){
+        
+        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE teaIsDeleted = 0', null);// appeler la méthode pour executer la requète
+
+        $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        $this->unsetData($req); // vide le jeu d'enregistrement
+
+        return $teachers;// retour tous les enseignants
+    }
+
+    /**
+     * récupère tous les enseignants deleted de la database
+     *
+     * @return array()
+     */
+    public function getAllDeletedTeachers(){
+        
+        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE teaIsDeleted = 1', null);// appeler la méthode pour executer la requète
+
+        $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        $this->unsetData($req); // vide le jeu d'enregistrement
+
+        return $teachers;// retour tous les enseignants
+    }
+
+    /**
+     * modifie le statu teaIsDeleted d'un enseignant
+     *
+     * @param int $idTeacher
+     * @param bool $wannaDelete
+     * @return void
+     */
+    public function moveTeacherToDeleted($idTeacher, $wannaDelete)
+    {
+        $query = "";
+
+        if($wannaDelete == "true")
+        {
+            $query = 'UPDATE t_teacher SET teaIsDeleted = 1 WHERE idTeacher = ' . $idTeacher;
+        }
+        else
+        {
+            $query = 'UPDATE t_teacher SET teaIsDeleted = 0 WHERE idTeacher = ' . $idTeacher;
+        }
+
+        $req = $this->queryPrepareExecute($query, null);
+
+        $this->unsetData($req);
+    }
+
+    /**
+     * permet de restaurer tous les enseignants (set teaIsDeleted à 0)
+     *
+     * @return void
+     */
+    public function restoreWholeTeachers()
+    {
+        $teachers = $this->getAllDeletedTeachers();
+
+        foreach($teachers as $teacher)
+        {
+            $this->moveTeacherToDeleted($teacher["idTeacher"], "false");
+        }
+    }
+
+    /**
      * permet d'obtenir un prof depuis son id
      *
      * @param int $id
