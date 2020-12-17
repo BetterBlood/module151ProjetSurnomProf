@@ -1,20 +1,35 @@
 <div class="container">
 
 	<h2>Liste des Sections</h2>
-	<div>
+	<div class="pull-right">
 		<?php
 			if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"] && array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 50) 
 			{
-				echo '<a href="index.php?controller=section&action=addSection"><button class="pull-right">ajouter une section</button></a>';
+				echo '<a class="btn btn-info" href="index.php?controller=teacher&action=addTeacher">ajouter un professeur</a>';
+				echo '<a class="btn btn-info" href="index.php?controller=section&action=list">liste des sections</a>'; // accès a la liste des sections
 
-				if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 100)
+				if ($_SESSION["userPermissionsNumber"] >= 75) // visibilité de la modification de l'état teaIsDeleted des enseignants
 				{
-					echo '<a href="index.php?controller=user&action=manageUsers"><button class="pull-right">manage Users</button></a>';
+					if(isset($deletedTeacher) && $deletedTeacher)
+					{
+						echo '<a class="btn btn-success" href="index.php?controller=teacher&action=restoreArchiveList&restoreAll=true">tout restaurer</a>';  // bouton réstaurer
+					}
+					else
+					{
+						echo '<a class="btn btn-warning" href="index.php?controller=teacher&action=archiveList">prof supprimés</a>'; // bouton pour accèder aux prof présupprimé
+					}
+					
+				}
+
+				if ($_SESSION["userPermissionsNumber"] >= 100) // visibilité du managment des users
+				{
+					echo '<a class="btn btn-danger" href="index.php?controller=user&action=manageUsers">manage Users</a>';
 				}
 			}
 			else
 			{
-				echo '<a onclick="confirm(\'Une élévation est nécessaire\')" href="#"><button class="pull-right">ajouter un professeur</button></a>';
+				echo '<a class="btn btn-info" onclick="confirm(\'Une élévation est nécessaire\')" href="#">ajouter un professeur</a>';
+				echo '<a class="btn btn-info" href="index.php?controller=section&action=list">liste des sections</a>'; // accès a la liste des sections
 			}
 		?>
 	</div>

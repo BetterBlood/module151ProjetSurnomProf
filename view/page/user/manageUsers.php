@@ -28,7 +28,7 @@
             <th>Option</th>
 		</tr>
 		<?php
-            echo '<a href="index.php?controller=user&action=addUser"><button class="pull-right">ajouter un compte</button></a>';
+            echo '<a class="btn btn-danger pull-right" href="index.php?controller=user&action=addUser">ajouter un compte</a>';
 			// Affichage de chaque enseignant
 			foreach ($users as $user) 
 			{
