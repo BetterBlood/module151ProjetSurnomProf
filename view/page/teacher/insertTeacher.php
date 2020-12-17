@@ -20,6 +20,7 @@
         $sections = $database->getAllSections();
     }
 ?>
+
 <!DOCTYPE html>
 <!--
  * ETML
@@ -158,7 +159,7 @@
 
             //var_dump($teacher);
 
-            if (!$error)
+            if (!$error) // pas d'erreur
             {
                 $database = new Database();
                 $database->insertTeacher($teacher); // TODO : si le temps le permet : faire une vérification de l'ajout, si réussi effacer les variables de session
@@ -192,9 +193,9 @@
                     unset($_SESSION["error"]);
                 }
                 
-                header('Location: ../../../index.php?controller=teacher&action=list');
+                header('Location: ../../../index.php?controller=teacher&action=list'); // redirection vers la page list des teacher
             }
-            else
+            else // erreur détéctée -> redirection vers la page addTeacher
             {
                 header('Location: ../../../index.php?controller=teacher&action=addTeacher');
             }

@@ -4,7 +4,9 @@
         <form action="view/page/user/login.php" method="post">
             <div class="form-row form-inline" style="height:fit-content">
                 <?php 
-                    if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"]) // array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"]
+                    
+                    
+                    if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"]) // si on est login
                     {
                         ?>
                         <div class="form-group col-md-4 mb-3" style="width:fit-content">
@@ -19,9 +21,9 @@
 
                         <?php
                     }
-                    else 
+                    else // si on est pas login
                     {
-                        if (array_key_exists("loginError", $_SESSION) && $_SESSION["loginError"])
+                        if (array_key_exists("loginError", $_SESSION) && $_SESSION["loginError"]) // affichage d'une erreur de login
                         {
                             ?>
 
@@ -37,7 +39,7 @@
 
                             <?php
                         }
-                        else
+                        else // affichage normal du login
                         {
                             ?>
 
