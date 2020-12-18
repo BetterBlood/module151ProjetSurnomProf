@@ -9,7 +9,7 @@
 
     $GLOBALS["MM_CONFIG_DATABASE"] = array(
         "dbname"    => "db_nickname_jersteiner",
-        "username"  => "dbjersteinerUser",
+        "username"  => "dbNicknameUser",
         "password"  => ".Etml-",
         "host"      => "localhost",
         "port"      => "3306",

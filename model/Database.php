@@ -42,7 +42,7 @@
     /**
      * simple requette
      *
-     * @param [type] $query
+     * @param string $query
      * @return void
      */
     private function querySimpleExecute($query){
@@ -55,8 +55,8 @@
     /**
      * Undocumented function
      *
-     * @param [type] $query
-     * @param [type] $binds
+     * @param string $query
+     * @param array $binds
      * @return PDOStatement
      */
     private function queryPrepareExecute($query, $binds){
@@ -79,7 +79,7 @@
     /**
      * Undocumented function
      *
-     * @param [type] $req
+     * @param PDOSTATMENT $req
      * @return void
      */
     private function formatData($req){
@@ -434,7 +434,15 @@
      */
     public function getOneSection($id){
 
-        $req = $this->queryPrepareExecute('SELECT * FROM t_section WHERE idSection = ' . $id, null); // appeler la méthode pour executer la requète
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $req = $this->queryPrepareExecute('SELECT * FROM t_section WHERE idSection = :id', $values); // appeler la méthode pour executer la requète
 
         $sections = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
 
