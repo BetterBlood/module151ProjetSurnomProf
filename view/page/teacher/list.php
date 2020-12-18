@@ -98,7 +98,7 @@
 					{
 						echo '<tr>';
 						echo '<td><input type="checkbox" id="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" name="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" value="' . htmlspecialchars($teacher['idTeacher']) . '">'; // checkbox pour élir plusieurs enseignants d'un coup
-						echo ' ' . htmlspecialchars($teacher['teaLastName']) . " " .  htmlspecialchars($teacher['teaFirstName']) . '</td>';
+						echo '<label for="checkbox' . htmlspecialchars($teacher['idTeacher']) . '">' . htmlspecialchars($teacher['teaLastName']) . " " .  htmlspecialchars($teacher['teaFirstName']) . '</label></td>';
 						echo '<td>' . htmlspecialchars($teacher['teaNickname']) . '</td>';
 
 						echo '<td>';
