@@ -269,8 +269,11 @@ class TeacherController extends Controller {
             {
                 $database->voteTeacher($_GET["id"]);
             } 
+
             $teacher = $database->getOneTeacher($_GET['id']);
         }
+
+        $section = $database->getOneSection(htmlspecialchars($teacher['idSection']));
 
         //$customerRepository = new CustomerRepository();
         //$customer = $customerRepository->findOne($_GET['id']);

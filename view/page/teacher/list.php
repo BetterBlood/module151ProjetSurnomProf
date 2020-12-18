@@ -46,7 +46,7 @@
 	?>
 	<div class="pull-right">
 		<?php
-			//var_dump($_SESSION);
+			//var_dump($_SESSION); // DEBUG 
 
 			if (array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"] && array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 50) 
 			{
@@ -82,7 +82,7 @@
 	<div class="row">
 		<form action="index.php?controller=teacher&action=list&multipleVotes=true" method="post">
 			<table class="table table-striped">
-				<button class="btn btn-success" type="submit">Elire plusieurs</button>
+				<button class="btn btn-success" type="submit">Elire plusieurs</button><!-- bouton permettant d'élir plusieurs enseignants d'un seul coup-->
 				<tr>
 					<th>Nom</th>
 					<th>Surnom</th>
@@ -91,13 +91,13 @@
 				</tr>
 				
 				<?php
-					$popularIndex = true; // permet d'afficher du text supplémentaire pour le premier enseignant du foreach
+					$popularIndex = true; // permet d'afficher du text supplémentaire pour le premier enseignant du tableau des enseignant retourné
 
 					// Affichage de chaque enseignant
 					foreach ($teachers as $teacher) 
 					{
 						echo '<tr>';
-						echo '<td><input type="checkbox" id="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" name="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" value="' . htmlspecialchars($teacher['idTeacher']) . '">';
+						echo '<td><input type="checkbox" id="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" name="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" value="' . htmlspecialchars($teacher['idTeacher']) . '">'; // checkbox pour élir plusieurs enseignants d'un coup
 						echo ' ' . htmlspecialchars($teacher['teaLastName']) . " " .  htmlspecialchars($teacher['teaFirstName']) . '</td>';
 						echo '<td>' . htmlspecialchars($teacher['teaNickname']) . '</td>';
 
@@ -127,22 +127,22 @@
 						
 						echo '</td>';
 
-						echo '<td>';
-							echo '<a href="index.php?controller=teacher&action=list&id=' . htmlspecialchars($teacher['idTeacher']) . '&vote=true">J\'élis </a>';
+						echo '<td>'; // votes
+							echo '<a href="index.php?controller=teacher&action=list&id=' . htmlspecialchars($teacher['idTeacher']) . '&vote=true">J\'élis </a>'; // lien permettant de vôter
 
 							if ($teacher["teaVotes"] != null)
 							{
-								echo htmlspecialchars($teacher['teaVotes']);
+								echo htmlspecialchars($teacher['teaVotes']); // affichage du nombre de vote
 							}
 							else
 							{
-								echo 'Allez élisez-moi';
+								echo 'Allez élisez-moi'; // affichage si aucun vote
 							}
 
 							if ($popularIndex)
 							{
 								$popularIndex = false;
-								echo ' Surnom le plus populaire';
+								echo ' Surnom le plus populaire'; // affichage pour le surnom le plus populaire
 							}
 
 						echo'</td>';

@@ -1,13 +1,13 @@
 <div class="container">
 
 	<?php 
-		if (!isset($teacher))
+		if (!isset($teacher)) // redirection en cas de teacher not set
 		{
 			header("Location: index.php?controller=teacher&action=list");
 		}
 		else
 		{
-			echo '<h2>' . htmlspecialchars($teacher['teaLastName']) . ' ' . htmlspecialchars($teacher['teaFirstName']) .'</h2>';
+			echo '<h2>' . htmlspecialchars($teacher['teaLastName']) . ' ' . htmlspecialchars($teacher['teaFirstName']) .'</h2>'; // affichage du titre (nom prénom de l'enseignant)
 		}
 	?>
 
@@ -34,19 +34,17 @@
             echo '<p>surnom : ' . htmlspecialchars($teacher['teaNickname']). '</p>';
 			echo '<p>origine : ' . htmlspecialchars($teacher['teaNicknameOrigin']) . '</p>';
 			
-			$database = new Database();
-			$section = $database->getOneSection(htmlspecialchars($teacher['idSection']));
-			echo '<p>Section : ' . htmlspecialchars($section['secName']) . '</p>'; 
+			echo '<p>Section : ' . htmlspecialchars($section['secName']) . '</p>'; // affichage de la section
 
 			echo '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '&vote=true">J\'élis </a>'; // lien d'éléction
 
-			if ($teacher["teaVotes"] != null) // affichage si il n'y a aucun vote
+			if ($teacher["teaVotes"] != null) // affichage si il y a des votes
 			{
 				echo '<p>Nombre de voix : ' . htmlspecialchars($teacher['teaVotes']) . ' </p>';
 			}
 			else
 			{
-				echo '<p>Nombre de voix : Aucun vote</p>';
+				echo '<p>Nombre de voix : Aucun vote</p>'; // affichage si il n'y a aucun vote
 			}
 		?>
 		</div>
