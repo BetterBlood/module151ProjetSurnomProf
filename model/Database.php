@@ -157,6 +157,22 @@
     }
 
     /**
+     * permet d'obtenir tous les prof actif classé par vote
+     *
+     * @return void
+     */
+    public function getAllActiveTeacherOrderedByVotes()
+    {
+        $req = $this->queryPrepareExecute('SELECT * FROM t_teacher WHERE teaIsDeleted = 0 ORDER BY teaVotes DESC', null);// appeler la méthode pour executer la requète
+
+        $teachers = $this->formatData($req);// appeler la méthode pour avoir le résultat sous forme de tableau
+
+        $this->unsetData($req); // vide le jeu d'enregistrement
+
+        return $teachers;// retour tous les enseignants
+    }
+
+    /**
      * modifie le statu teaIsDeleted d'un enseignant
      *
      * @param int $idTeacher
@@ -352,6 +368,69 @@
     }
 
     /**
+     * permet de voter pour un enseignant
+     *
+     * @param int $id
+     * @return void
+     */
+    public function voteTeacher($id)
+    {
+        $votes = $this->getVotesTeacher($id); // on récupère le nombre de vote actuel
+
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+            2 => array(
+                'marker' => ':votes',
+                'var' => ($votes + 1), //incrémentation du nombre de vote récupéré
+                'type' => PDO::PARAM_INT
+            )
+        );
+
+        $query = "UPDATE t_teacher SET teaVotes = :votes WHERE t_teacher.idTeacher = :id"; // modification de la database
+
+        $req = $this->queryPrepareExecute($query, $values);
+
+        $this->unsetData($req);
+    }
+
+    public function VoteTeachers($ids)
+    {
+        foreach($ids as $id)
+        {
+            $this->voteTeacher($id);
+        }
+    }
+
+    /**
+     * permet de récupérer le vote d'un enseignat
+     *
+     * @param int $id
+     * @return int
+     */
+    public function getVotesTeacher($id)
+    {
+        $values = array(
+            1 => array(
+                'marker' => ':id',
+                'var' => $id,
+                'type' => PDO::PARAM_INT
+            ),
+        );
+
+        $req = $this->queryPrepareExecute('SELECT teaVotes FROM t_teacher WHERE idTeacher = :id', $values); // appeler la méthode pour executer la requète
+
+        $votes = $this->formatData($req); // appel de la méthode pour avoir le résultat sous forme de tableau
+
+        $this->unsetData($req); // vide le jeu d'enregistrement
+
+        return (int)($votes[0]["teaVotes"]);// retour le nombre de vote
+    }
+
+    /**
      * permet de retirer une section de la base de donnée
      *
      * @param int $id
@@ -520,13 +599,18 @@
                 'marker' => ':section',
                 'var' => $teacher["section"],
                 'type' => PDO::PARAM_INT
+            ),
+            7 => array(
+                'marker' => ':id',
+                'var' => $idTeacher,
+                'type' => PDO::PARAM_INT
             )
         );
 
         $query =   'UPDATE t_teacher SET 
                     teaLastName = :surname, teaFirstName = :firstname, teaGender = :gender,
                     teaNickname = :nickname, teaNicknameOrigin = :origineNickname, idSection = :section
-                    WHERE idTeacher = ' . $idTeacher;
+                    WHERE idTeacher = :id';
 
         $req = $this->queryPrepareExecute($query, $values);
 

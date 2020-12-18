@@ -80,48 +80,79 @@
 	</div>
 	
 	<div class="row">
-		<table class="table table-striped">
-		<tr>
-			<th>Nom</th>
-			<th>Surnom</th>
-			<th>Option(s)</th>
-		</tr>
-		<?php
-			// Affichage de chaque enseignant
-			foreach ($teachers as $teacher) 
-			{
-				echo '<tr>';
-				echo '<td>' . htmlspecialchars($teacher['teaLastName']) . " " .  htmlspecialchars($teacher['teaFirstName']) . '</td>';
-				echo '<td>' . htmlspecialchars($teacher['teaNickname']) . '</td>';
-
-				echo '<td>';
-				// vérifier la connection :
-				if ( array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"])
-				{
-					if (isset($deletedTeacher) && $deletedTeacher) // affichage des enseignants delete
-					{
-						if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 75)
-						{
-							echo '<a href="view/page/teacher/moveToDeleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '&delete=false"><img style="width:33px" src="resources/image/restore.png" alt="image de restauration pour restaurer l\'enseignant de la base de donnée"></a>';
-							echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="view/page/teacher/deleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconDefinitiveTrash.png" alt="image de poubelle pour supprimer définitivement l\'enseignant de la base de donnée"></a>';
-						}
-					}
-					else // affichage des enseignants non delete
-					{
-						echo '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconLoupe.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignant"></a>';
-					
-						if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 75)
-						{
-							echo '<a href="view/page/teacher/moveToDeleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '&delete=true"><img src="resources/image/iconTrash.png" alt="image de poubelle pour supprimer l\'enseignant de la base de donnée"></a>';
-							echo '<a href="index.php?controller=teacher&action=editTeacher&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconPencil.png" alt="image de crayon pour modifier l\'enseignant"></a>';
-						}
-					}
-				}
+		<form action="index.php?controller=teacher&action=list&multipleVotes=true" method="post">
+			<table class="table table-striped">
+				<button class="btn btn-success" type="submit">Elire plusieurs</button>
+				<tr>
+					<th>Nom</th>
+					<th>Surnom</th>
+					<th>Option(s)</th>
+					<th>Vote</th>
+				</tr>
 				
-				echo '</td></tr>';
-			}
-		?>
+				<?php
+					$popularIndex = true; // permet d'afficher du text supplémentaire pour le premier enseignant du foreach
 
-		</table>
+					// Affichage de chaque enseignant
+					foreach ($teachers as $teacher) 
+					{
+						echo '<tr>';
+						echo '<td><input type="checkbox" id="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" name="checkbox' . htmlspecialchars($teacher['idTeacher']) . '" value="' . htmlspecialchars($teacher['idTeacher']) . '">';
+						echo ' ' . htmlspecialchars($teacher['teaLastName']) . " " .  htmlspecialchars($teacher['teaFirstName']) . '</td>';
+						echo '<td>' . htmlspecialchars($teacher['teaNickname']) . '</td>';
+
+						echo '<td>';
+						// vérifier la connection :
+						if ( array_key_exists("loged_in", $_SESSION) && $_SESSION["loged_in"])
+						{
+							if (isset($deletedTeacher) && $deletedTeacher) // affichage des enseignants delete
+							{
+								if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 75)
+								{
+									echo '<a href="view/page/teacher/moveToDeleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '&delete=false"><img style="width:33px" src="resources/image/restore.png" alt="image de restauration pour restaurer l\'enseignant de la base de donnée"></a>';
+									echo '<a onclick="return confirm(\'Voulez-vous vraiment supprimer cette entrée ?\')" href="view/page/teacher/deleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconDefinitiveTrash.png" alt="image de poubelle pour supprimer définitivement l\'enseignant de la base de donnée"></a>';
+								}
+							}
+							else // affichage des enseignants non delete
+							{
+								echo '<a href="index.php?controller=teacher&action=detail&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconLoupe.png" alt="image de loupe pour obtenir des informations supplémentaire sur l\'enseignant"></a>';
+							
+								if (array_key_exists("userPermissionsNumber", $_SESSION) && $_SESSION["userPermissionsNumber"] >= 75)
+								{
+									echo '<a href="view/page/teacher/moveToDeleteTeacher.php?id=' . htmlspecialchars($teacher['idTeacher']) . '&delete=true"><img src="resources/image/iconTrash.png" alt="image de poubelle pour supprimer l\'enseignant de la base de donnée"></a>';
+									echo '<a href="index.php?controller=teacher&action=editTeacher&id=' . htmlspecialchars($teacher['idTeacher']) . '"><img src="resources/image/iconPencil.png" alt="image de crayon pour modifier l\'enseignant"></a>';
+								}
+							}
+						}
+						
+						echo '</td>';
+
+						echo '<td>';
+							echo '<a href="index.php?controller=teacher&action=list&id=' . htmlspecialchars($teacher['idTeacher']) . '&vote=true">J\'élis </a>';
+
+							if ($teacher["teaVotes"] != null)
+							{
+								echo htmlspecialchars($teacher['teaVotes']);
+							}
+							else
+							{
+								echo 'Allez élisez-moi';
+							}
+
+							if ($popularIndex)
+							{
+								$popularIndex = false;
+								echo ' Surnom le plus populaire';
+							}
+
+						echo'</td>';
+						
+						echo '</tr>';
+					}
+				?>
+			
+
+			</table>
+		</form>
 	</div>
 </div>
