@@ -43,7 +43,7 @@
             $_SESSION["error"] = "";
             
             // vérification de l'intégrité du nom
-            if (array_key_exists("name", $_POST) && trim($_POST["name"]) != "" && $_POST["name"] != " " && preg_match('/^[A-Za-z]*(((-)|(\')|( )){1}[A-Za-z]+)*$/', htmlspecialchars($_POST['name']))) 
+            if (array_key_exists("name", $_POST) && trim($_POST["name"]) != "" && $_POST["name"] != " " && preg_match('/^[A-Za-zÀ-ÿ]*(((-)|(\')|( )){1}[A-Za-zÀ-ÿ]+)*$/', htmlspecialchars($_POST['name']))) 
             {
                 $teacher["name"] = trim($_POST["name"]);
                 $_SESSION["surname"] = trim($_POST["name"]);
@@ -62,7 +62,7 @@
             $_SESSION["error"] .= ",";
 
             // vérification de l'intégrité du prénom
-            if (array_key_exists("firstname", $_POST) && trim($_POST["firstname"]) != "" && $_POST["firstname"] != " " && preg_match('/^[A-Za-z]*(((-)|(\')|( )){1}[A-Za-z]+)*$/', htmlspecialchars($_POST['firstname'])))
+            if (array_key_exists("firstname", $_POST) && trim($_POST["firstname"]) != "" && $_POST["firstname"] != " " && preg_match('/^[A-Za-zÀ-ÿ]*(((-)|(\')|( )){1}[A-Za-zÀ-ÿ]+)*$/', htmlspecialchars($_POST['firstname'])))
             {
                 $teacher["firstname"] = trim($_POST["firstname"]);
                 $_SESSION["firstname"] = trim($_POST["firstname"]);

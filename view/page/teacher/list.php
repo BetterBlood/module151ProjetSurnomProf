@@ -1,6 +1,49 @@
 <div class="container">
 
-	<h2>Liste des enseignants</h2>
+	<?php
+		if(isset($deletedTeacher) && $deletedTeacher)
+		{
+			?>
+				<h2>Liste des enseignants archivés</h2>
+			<?php
+
+			if (array_key_exists("modif", $_GET)) // affichage de test, s'occupe d'informer l'utilisateur de la réussite ou non de la restauration d'un enseignant
+			{
+				if ($_GET["modif"] == "true")
+				{ 
+					// en développement :
+					?>
+					<div class="bg-success">oppération réussie</div>
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>Bien joué !!</strong> L'Enseignant a corrêctement été restauré
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<?php
+				}
+				else
+				{
+					// en développement :
+					?>
+					<div class="bg-danger">oppération échouée</div>
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>OUPS !</strong> il semble que l'enseignant n'a pas pu être restauré
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<?php
+				}
+			}
+		}
+		else
+		{
+			?>
+				<h2>Liste des enseignants</h2>
+			<?php
+		}
+	?>
 	<div class="pull-right">
 		<?php
 			//var_dump($_SESSION);
