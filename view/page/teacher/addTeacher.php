@@ -71,12 +71,11 @@
             var_dump($_SESSION);
             echo "test";
         } // */
-        // resources/image/iconLoupe.png
     ?>
 
     <form action="view/page/teacher/insertTeacher.php" method="post"> 
 
-        <div class="form-row" style="height: fit-content">
+        <div class="form-row" style="height: fit-content"> <!-- formulaire classique -->
             <div class="form-group col-md-4 mb-3">
                 <label for="name">Nom</label>
                 <?php
@@ -86,6 +85,7 @@
                         echo 'value="' . $_SESSION["surname"] . '"';
                     }
 
+                    // affichage des erreurs :
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "surname") !== false)
                     {
                         echo 'style="box-shadow:0 0 1em red"';
@@ -105,6 +105,7 @@
                         echo 'value="' . $_SESSION["firstname"] . '"';
                     }
 
+                    // affichage des erreurs :
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "firstname") !== false)
                     {
                         echo 'style="box-shadow:0 0 1em red"';
@@ -124,6 +125,7 @@
                 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "gender") !== false)
                     {
+                        // affichage des erreurs :
                         echo 'style="box-shadow: inset 0 0 1em red, 0 0 1em red"';
                     }
                     echo '>';
@@ -179,6 +181,7 @@
 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "nickname") !== false)
                     {
+                        // affichage des erreurs :
                         echo 'style="box-shadow: 0 0 1em red" ';
                     }
 
@@ -196,6 +199,7 @@
 
                     if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "origineNickname") !== false)
                     {
+                        // affichage des erreurs :
                         echo 'style="box-shadow: 0 0 1em red" ';
                     }
                     echo '>';
@@ -215,6 +219,7 @@
             <select id="section" name="section" class="form-control" 
                 <?php if (array_key_exists("error", $_SESSION) && strpos($_SESSION["error"], "section") !== false)
                     {
+                        // affichage des erreurs :
                         echo 'style="box-shadow: 0 0 1em red" ';
                     }
                 ?>

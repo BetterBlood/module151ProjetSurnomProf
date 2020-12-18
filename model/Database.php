@@ -159,7 +159,7 @@
     /**
      * permet d'obtenir tous les prof actif classé par vote
      *
-     * @return void
+     * @return array
      */
     public function getAllActiveTeacherOrderedByVotes()
     {
@@ -289,7 +289,7 @@
     /**
      * ajout une section dans la base de dopnnée
      *
-     * @param array() $section
+     * @param array $section
      * @return void
      */
     public function insertSection($section){
@@ -397,16 +397,22 @@
         $this->unsetData($req);
     }
 
+    /**
+     * permet de voter pour tous les prof dont l'id est passé en paramettre
+     *
+     * @param array $ids (c'est un array de int)
+     * @return void
+     */
     public function VoteTeachers($ids)
     {
-        foreach($ids as $id)
+        foreach($ids as $id) // parcourt les ids et appel la méthode voteTeacher()
         {
             $this->voteTeacher($id);
         }
     }
 
     /**
-     * permet de récupérer le vote d'un enseignat
+     * permet de récupérer le nombre de voix d'un enseignat
      *
      * @param int $id
      * @return int
