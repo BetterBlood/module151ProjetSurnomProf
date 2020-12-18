@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 18 Décembre 2020 à 09:41
+-- Généré le :  Ven 18 Décembre 2020 à 09:49
 -- Version du serveur :  5.7.11
 -- Version de PHP :  7.0.3
 
@@ -19,9 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `db_nickname_jersteiner`
 --
-
-create database db_nickname_jersteiner;
-use db_nickname_jersteiner;
 
 -- --------------------------------------------------------
 
@@ -67,13 +64,13 @@ CREATE TABLE `t_teacher` (
 --
 
 INSERT INTO `t_teacher` (`idTeacher`, `teaLastName`, `teaFirstName`, `teaGender`, `teaNickname`, `teaNicknameOrigin`, `teaIsDeleted`, `teaVotes`, `idSection`) VALUES
-(1, 'testnameId1', 'testFirstnameId1', 'w', 'testnicknameId1', 'testorigineId1', 0, 12, 1),
-(2, 'test2lastname', 'test2firstname', 'w', 'test2nickname', 'test2origine', 0, 6, 1),
-(3, 'test3_name', 'test3_firstname', 'o', 'test3_nickname', 'test3_origine', 0, 2, 2),
-(14, '<h1>testId14</h1>', '<h1>testId14</h1>', 'm', '<h1>testId14</h1>', '<h1>OrigineId14</h1>', 0, 15, 1),
+(1, 'testnameId1', 'testFirstnameId1', 'w', 'testnicknameId1', 'testorigineId1', 0, 13, 1),
+(2, 'test2lastname', 'test2firstname', 'w', 'test2nickname', 'test2origine', 0, 9, 1),
+(3, 'test3_name', 'test3_firstname', 'o', 'test3_nickname', 'test3_origine', 0, 8, 2),
+(14, '<h1>testId14</h1>', '<h1>testId14</h1>', 'm', '<h1>testId14</h1>', '<h1>OrigineId14</h1>', 0, NULL, 1),
 (17, 'gdergId17', 'ergergId17', 'w', 'rgergeId17', 'gergerId17', 0, NULL, 3),
 (18, 'leprofsupprimeId18', 'leprofsupprimeId18', 'm', 'leprofsuppriméId18', 'leprofsuppriméId18', 1, 3, 3),
-(19, 'fgewbf regexcheked', 'arnaux', 'w', 'gerberngt', 'dkfgjernbg\'ergkjbenrgkjerge\'rger\'g\'er\'gergfe""sdlkjfslkdf"<<<<<\\\\\\kdjhfbd\\\'fwsedfwebf', 0, 7, 2);
+(19, 'fgewbf regexcheked', 'arnaux', 'w', 'gerberngt', 'dkfgjernbg\'ergkjbenrgkjerge\'rger\'g\'er\'gergfe""sdlkjfslkdf"<<<<<\\\\\\kdjhfbd\\\'fwsedfwebf', 0, 8, 2);
 
 -- --------------------------------------------------------
 
