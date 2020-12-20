@@ -1,0 +1,7 @@
+ pseudo		 mdp		 droits
+
+ 1		 un		 1
+ 25		 25		 25
+ Lawand		 123456		 50
+ etml		 .Etml-		 75
+ peter		 test		 100
