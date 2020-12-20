@@ -146,8 +146,29 @@ class TeacherController extends Controller {
 
         include_once("model/Database.php");
 		$database = new Database();
-        $teachers = $database->getAllActiveTeachers();
-        $deletedTeacher = false;
+
+        if (array_key_exists("vote", $_GET) && array_key_exists("id", $_GET))
+        {
+            if ($_GET["vote"] = "true" && $database->teacherExist($_GET["id"]))
+            {
+                $database->voteTeacher($_GET["id"]);
+            }
+        }
+
+        if (array_key_exists("multipleVotes", $_GET) && $_GET["multipleVotes"] == "true")
+        {
+            //var_dump($_POST); // DEBUG
+            foreach($_POST as $id) // parcourt les id reçu et incrémente chacun des profs
+            {
+                $database->voteTeacher($id);
+            }
+        }
+        
+        //$teachers = $database->getAllTeachers(); // basique
+        //$teachers = $database->getAllActiveTeachers(); // test formatif
+        $deletedTeacher = false; // test formatif
+        $teachers = $database->getAllActiveTeacherOrderedByVotes(); // test sommatif (+test formatif)
+       
 
         // Charge le fichier pour la vue
         $view = file_get_contents('view/page/teacher/list.php');
@@ -244,8 +265,15 @@ class TeacherController extends Controller {
 
         if (array_key_exists("id", $_GET) && $database->teacherExist($_GET['id']))
         {
+            if (array_key_exists("vote", $_GET) && $_GET["vote"] = "true")
+            {
+                $database->voteTeacher($_GET["id"]);
+            } 
+
             $teacher = $database->getOneTeacher($_GET['id']);
         }
+
+        $section = $database->getOneSection(htmlspecialchars($teacher['idSection']));
 
         //$customerRepository = new CustomerRepository();
         //$customer = $customerRepository->findOne($_GET['id']);
